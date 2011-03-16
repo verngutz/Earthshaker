@@ -3,6 +3,7 @@
 	<head>
 		<title></title>
 		<script type = "text/javascript" src = "dynamictable.jsm"></script>
+		<script type = "text/javascript" src = "numericOnly.jsm"></script>
 		<script type = "text/javascript">
 			
 			function initialize()
@@ -14,7 +15,7 @@
 				updateDayChoice();
 				addHourChoice();
 				addMinuteChoice();
-				var tableArray = new Array("deliveryTable");
+				var tableArray = new Array("deliveryTable", "batchTable");
 				hideTemplateRows(tableArray);
 			}
 			
@@ -202,8 +203,8 @@
 				<tr>
 					<td><input type = "checkbox" name = "checkbox"/></td>
 					<td><select name= "itemType"></select></td>
-					<td><input type = "text" name = "cost"/></td>
-					<td><input type = "text" name = "quantity"/></td>
+					<td><input type = "text" name = "cost" onkeypress = "return numericOnly(event);"/></td>
+					<td><input type = "text" name = "quantity" onkeypress = "return numericOnly(event);"/></td>
 				</tr>
 			</table>
 			
@@ -213,12 +214,29 @@
 			<input type = "submit" value = "Accept Delivery">
 		</form>
 		
-		<h3>Issue Item to Sales Agent</h3>
+		<h3>Issue Items to Sales Agent</h3>
 		<form name = "issue" action = "redirect.php" method = "post">
-			<input type = "submit" value = "Issue Item">
+			<p>Issued to: <input type = "text" name = "supplier" value = "Sales Agent's Name"></p>
+			<p>Issued by: <input type = "text" name = "supplier" value = "Staff's Name"></p>
+			
+			<caption>Batch Items</caption>
+			<table id = "batchTable">
+				<th>
+					<td>Item Type</td>
+					<td>Quantity</td>
+				</th>
+				<tr>
+					<td><input type = "checkbox" name = "checkbox"/></td>
+					<td><select name= "itemType"></select></td>
+					<td><input type = "text" name = "quantity" onkeypress = "return numericOnly(event);"/></td>
+				</tr>
+			</table>
+			
+			<input type = "button" value = "Add New Batch Item" onclick = "addRow('batchTable')"/>
+			<input type = "button" value = "Delete Selected Batch Items" onclick = "deleteRow('batchTable')"/>
+			<br>
+			<input type = "submit" value = "Issue Items">
 		</form>
-		
-		
 	
 		<p id = "debug">
 		</p>

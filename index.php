@@ -5,6 +5,12 @@
 	</head>
 
 	<body>
+	
+		<?
+			$con = mysql_connect("localhost", "root", "root") or die('Could not connect: ' . mysql_error());
+			mysql_query("USE distribution");
+		?>
+		
 		<form name = "userview" action = "redirect.php" method = "POST">
 			<p>Which type of user are you?</p>
 			<input type = "radio" name = "group1" value = "manager" checked = "true"/>Manager<br>

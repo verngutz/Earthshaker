@@ -5,6 +5,8 @@ function hideTemplateRows(tableID)
 	for(var i = 0; i < tableID.length; i++)
 	{
 		var table = document.getElementById(tableID[i]);
+		table.rows[0].style.visibility = 'hidden';
+		table.rows[0].style.display = 'none';
 		table.rows[1].style.visibility = 'hidden';
 		table.rows[1].style.display = 'none';
 	}
@@ -16,6 +18,9 @@ function addRow(tableID)
 	var rowCount = table.rows.length;
 	var row = table.insertRow(rowCount);
 	var colCount = table.rows[1].cells.length;
+	
+	table.rows[0].style.visibility = 'visible';
+	table.rows[0].style.display = 'table-row';
 	
 	for(var i = 0; i < colCount; i++) 
 	{
@@ -54,4 +59,11 @@ function deleteRow(tableID)
 			i--;
 		}
 	}
+	
+	if(rowCount <= 2)
+	{
+		table.rows[0].style.visibility = 'hidden';
+		table.rows[0].style.display = 'none';
+	}
+	
 }

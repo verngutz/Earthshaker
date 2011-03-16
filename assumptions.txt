@@ -1,0 +1,3 @@
+List of Assumptions:
+1. Distinct suppliers have distinct names.
+2. Warehouse staff can no longer add deliveries that were done more than 25 years ago.

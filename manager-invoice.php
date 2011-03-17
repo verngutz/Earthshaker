@@ -1,7 +1,7 @@
 <html>
 	
 	<head>
-		<title>Make Sales Invoice</title>
+		<title>Print Sales Invoice</title>
 	</head>
 
 

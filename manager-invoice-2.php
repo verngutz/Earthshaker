@@ -2,8 +2,9 @@
 	<body>
 
 		<?php
-		
-		$result = mysql_query("SELECT i.invoiceno as 'invoiceno',i.invoicedate as 'invoicedate', i.agentid as 'agentid', s.clientid as 'clientid' FROM invoice i, salesagent s WHERE invoiceno=$_POST["input1"] and i.agentid=s.agentid LIMIT 1");
+		$con = mysql_connect("localhost", "root", "root") or die('Could not connect: ' . mysql_error());
+		mysql_select_db("distribution", $con);
+		$result = mysql_query("SELECT i.invoiceno as 'invoiceno',i.invoicedate as 'invoicedate', concat(s.agentlastname,', ',s.agentfirstname) as 'agentname', c.clientname as 'clientname' FROM invoice i, salesagent s, client c WHERE i.invoiceno=$_POST['input1'] and i.agentid=s.agentid and s.clientid=c.clientid LIMIT 1");
 
 		echo "<table border='1'>
 		<tr>
@@ -18,15 +19,15 @@
 		  echo "<tr>";
 		  echo "<td>" . $row['invoiceno'] . "</td>";
 		  echo "<td>" . $row['invoicedate'] . "</td>";
-		  echo "<td>" . $row['agentid'] . "</td>";
-		  echo "<td>" . $row['clientid'] . "</td>";
+		  echo "<td>" . $row['agentname'] . "</td>";
+		  echo "<td>" . $row['clientname'] . "</td>";
 		  echo "</tr>";
 		  }
 		echo "</table>";
 		
 		echo "<br>";
 		
-		$result2 = mysql_query("SELECT i.itemcode as 'itemcode', i.description as 'desc', ii.quantity as 'quant', i.srp as 'srp', d.amount as 'discount', (ii.quantity*i.srp*(100-d.amount)/100) as 'saleprice' FROM item i, discount d, itemxinvoice ii, salesagent sa, invoice iv WHERE itemxinvoice.invoiceno=$_POST["input1"] AND salesagent.clientid=discount.clientid AND salesagent.agentid=invoice.agentid AND invoice.invoiceno=itemxinvoice.invoiceno AND itemxinvoice.itemcode=item.itemcode);
+		$result2 = mysql_query("SELECT i.itemcode as 'itemcode', i.description as 'desc', ii.quantity as 'quant', i.srp as 'srp', d.amount as 'discount', (ii.quantity*i.srp*(100-d.amount)/100) as 'saleprice' FROM item i, discount d, itemxinvoice ii, salesagent sa, invoice iv WHERE itemxinvoice.invoiceno=$_POST["input1"] AND salesagent.clientid=discount.clientid AND salesagent.agentid=invoice.agentid AND invoice.invoiceno=itemxinvoice.invoiceno AND itemxinvoice.itemcode=item.itemcode");
 		
 		echo "<table border='1'>
 		<tr>

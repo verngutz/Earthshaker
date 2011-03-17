@@ -1,7 +1,7 @@
 <html>
 	
 	<head>
-		<title>Make Delivery Receipt</title>
+		<title>Print Delivery Receipt</title>
 	</head>
 
 

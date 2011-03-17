@@ -1,3 +1,8 @@
+<?
+	include("config.inc");
+	include("sellerhead.php");
+?>
+
 <html>
 
 	<head>

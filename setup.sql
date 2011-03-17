@@ -1,21 +1,25 @@
 CREATE TABLE staff
 (
-	staffid INT NOT NULL AUTO_INCREMENT, 
+	staffid INT NOT NULL AUTO_INCREMENT,
 	stafflname VARCHAR(20) NOT NULL, 
 	stafffname VARCHAR(20) NOT NULL, 
 	CONSTRAINT staffkey PRIMARY KEY(staffid)
 );
 
+ALTER TABLE staff AUTO_INCREMENT = 10000000;
+
 CREATE TABLE delivery
 (
 	deliveryid INT NOT NULL AUTO_INCREMENT, 
-	deliverydate DATE NOT NULL, 
-	deliverytime time NOT NULL, 
+	deliverydate DATE NOT NULL,
+	deliverytime TIME NOT NULL,
 	staffid INT NOT NULL, 
 	supplier VARCHAR(20) NOT NULL, 
 	CONSTRAINT delivery_pk PRIMARY KEY(deliveryid), 
 	CONSTRAINT delivery_fk_staff FOREIGN KEY(staffid) REFERENCES staff(staffid)
 );
+
+ALTER TABLE delivery AUTO_INCREMENT = 20000000;
 
 CREATE TABLE client
 (
@@ -24,15 +28,19 @@ CREATE TABLE client
 	CONSTRAINT client_pk PRIMARY KEY(clientid)
 );
 
+ALTER TABLE client AUTO_INCREMENT = 30000000;
+
 CREATE TABLE salesagent
 (
 	agentid INT NOT NULL AUTO_INCREMENT, 
 	agentlastname VARCHAR(20) NOT NULL, 
-	agentfirstname VARCHAR(20) NOT NULL, 
-	clientid INT NOT NULL, 
+	agentfirstname VARCHAR(20) NOT NULL,
+	clientid INT,
 	CONSTRAINT agent_pk PRIMARY KEY(agentid), 
 	CONSTRAINT agent_fk_client FOREIGN KEY(clientid) REFERENCES client(clientid)
 );
+
+ALTER TABLE salesagent AUTO_INCREMENT = 40000000;
 
 CREATE TABLE invoice
 (
@@ -42,6 +50,8 @@ CREATE TABLE invoice
 	CONSTRAINT invoice_pk PRIMARY KEY(invoiceno), 
 	CONSTRAINT invoice_fk FOREIGN KEY (agentid) REFERENCES salesagent(agentid)
 );
+
+ALTER TABLE invoice AUTO_INCREMENT = 50000000;
 
 CREATE TABLE batch
 (
@@ -53,19 +63,23 @@ CREATE TABLE batch
 	CONSTRAINT batch_fk_agent FOREIGN KEY(agentid) REFERENCES salesagent(agentid)
 );
 
+ALTER TABLE batch AUTO_INCREMENT = 60000000;
+
 CREATE TABLE item
 (
-	itemcode INT NOT NULL, 
+	itemcode INT NOT NULL AUTO_INCREMENT, 
 	description VARCHAR(100), 
-	srp DEC(7,2), 
+	srp DECIMAL(7,2),
 	CONSTRAINT item_pk PRIMARY KEY(itemcode)
 );
+
+ALTER TABLE item AUTO_INCREMENT = 70000000;
 
 CREATE TABLE discount
 (
 	clientid INT NOT NULL, 
-	itemcode INT NOT NULL, 
-	amount DEC(2,2) NOT NULL, 
+	itemcode INT NOT NULL,
+	amount DECIMAL(2,2) NOT NULL,
 	CONSTRAINT discount_pk PRIMARY KEY(clientid, itemcode), 
 	CONSTRAINT discount_fk_client FOREIGN KEY(clientid) REFERENCES client(clientid), 
 	CONSTRAINT discount_fk_item FOREIGN KEY(itemcode) REFERENCES item(itemcode)
@@ -74,8 +88,8 @@ CREATE TABLE discount
 CREATE TABLE deliveryxitem
 (
 	deliveryid INT NOT NULL, 
-	itemcode INT NOT NULL, 
-	cost DEC(7,2) NOT NULL, 
+	itemcode INT NOT NULL,
+	cost DECIMAL(7,2) NOT NULL,
 	quantity INT NOT NULL, 
 	CONSTRAINT di_pk PRIMARY KEY(deliveryid, itemcode), 
 	CONSTRAINT di_fk_del FOREIGN KEY(deliveryid) REFERENCES delivery(deliveryid), 
@@ -86,8 +100,8 @@ CREATE TABLE itemxinvoice
 (
 	itemcode INT NOT NULL, 
 	invoiceno INT NOT NULL, 
-	quantity INT NOT NULL, 
-	cost DEC(7,2) NOT NULL, 
+	quantity INT NOT NULL,
+	cost DECIMAL(7,2) NOT NULL,
 	CONSTRAINT ii_pk PRIMARY KEY(itemcode, invoiceno), 
 	CONSTRAINT ii_fk_item FOREIGN KEY(itemcode) REFERENCES item(itemcode), 
 	CONSTRAINT ii_fk_invoice FOREIGN KEY(invoiceno) REFERENCES invoice(invoiceno)
@@ -125,18 +139,18 @@ CREATE TABLE transfer
 	CONSTRAINT transfer_fk_item FOREIGN KEY(itemcode) REFERENCES item(itemcode)
 );
 
+ALTER TABLE transfer AUTO_INCREMENT = 80000000;
+
 CREATE TABLE manager
 (
-	managerid INT NOT NULL,
+	managerid INT NOT NULL AUTO_INCREMENT,
+	managerlastname VARCHAR(20) NOT NULL,
+	managerfirstname VARCHAR(20) NOT NULL,
 	CONSTRAINT manager_pk PRIMARY KEY(managerid)
 );
 
-ALTER TABLE staff AUTO_INCREMENT=10000;
-ALTER TABLE delivery AUTO_INCREMENT=20000;
-ALTER TABLE client AUTO_INCREMENT=30000;
-ALTER TABLE salesagent AUTO_INCREMENT=40000;
-ALTER TABLE invoice AUTO_INCREMENT=50000;
-ALTER TABLE batch AUTO_INCREMENT=60000;
-ALTER TABLE transfer AUTO_INCREMENT=70000;
+ALTER TABLE manager AUTO_INCREMENT = 90000000;
 
-INSERT INTO item VALUES (12345, 'COFFEE', 50);
+INSERT INTO manager (managerlastname, managerfirstname) VALUES('Vitug', 'Fernando');
+INSERT INTO staff (stafflastname, stafffirstname) VALUES('Anupol', 'Robin');
+INSERT INTO salesagent (agentlastname, agentfirstname, clientid) VALUES('Chua', 'Janine', NULL);

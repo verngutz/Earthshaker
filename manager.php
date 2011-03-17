@@ -1,3 +1,8 @@
+<?
+	include("config.inc");
+	include("managerhead.php");
+?>
+
 <html>
 
 	<head>

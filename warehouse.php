@@ -1,3 +1,8 @@
+<?
+	include("config.inc");
+	include("warehousehead.php");
+?>
+
 <html>
 
 	<head>
@@ -183,13 +188,8 @@
 	</head>
 
 	<body onload = "initialize()">
-		<?
-			$con = mysql_connect("localhost", "root", "root") or die('Could not connect: ' . mysql_error());
-			mysql_select_db("distribution", $con) or die('Database not found: ' . mysql_error());
-		?>
 		<h1>Warehouse Staff</h1>
 		<h2>What would you like to do?</h2>
-		
 		<p><input type = "checkbox" id = "manualdt" name = "manualdt" onclick = "updateDateTime()"> 
 			Tick to manually set the date and time.
 		</p>

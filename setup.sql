@@ -1,134 +1,142 @@
 CREATE TABLE staff
 (
-	staffid int not null, 
-	stafflname varchar(20) not null, 
-	stafffname varchar(20) not null, 
-	constraint staffkey primary key(staffid)
+	staffid INT NOT NULL AUTO_INCREMENT, 
+	stafflname VARCHAR(20) NOT NULL, 
+	stafffname VARCHAR(20) NOT NULL, 
+	CONSTRAINT staffkey PRIMARY KEY(staffid)
 );
 
 CREATE TABLE delivery
 (
-	deliveryid int not null, 
-	deliverydate DATE not null, 
-	deliverytime time not null, 
-	staffid int not null, 
-	supplier varchar(20) not null, 
-	constraint delivery_pk primary key(deliveryid), 
-	constraint delivery_fk_staff foreign key(staffid) REFERENCES staff(staffid)
+	deliveryid INT NOT NULL AUTO_INCREMENT, 
+	deliverydate DATE NOT NULL, 
+	deliverytime time NOT NULL, 
+	staffid INT NOT NULL, 
+	supplier VARCHAR(20) NOT NULL, 
+	CONSTRAINT delivery_pk PRIMARY KEY(deliveryid), 
+	CONSTRAINT delivery_fk_staff FOREIGN KEY(staffid) REFERENCES staff(staffid)
 );
 
 CREATE TABLE client
 (
-	clientid int not null, 
-	clientname varchar(20) not null, 
-	constraint client_pk primary key(clientid)
+	clientid INT NOT NULL AUTO_INCREMENT, 
+	clientname VARCHAR(20) NOT NULL, 
+	CONSTRAINT client_pk PRIMARY KEY(clientid)
 );
 
 CREATE TABLE salesagent
 (
-	agentid int not null, 
-	agentlastname varchar(20) not null, 
-	agentfirstname varchar(20) not null, 
-	clientid int not null, 
-	constraint agent_pk primary key(agentid), 
-	constraint agent_fk_client foreign key(clientid) references client(clientid)
+	agentid INT NOT NULL AUTO_INCREMENT, 
+	agentlastname VARCHAR(20) NOT NULL, 
+	agentfirstname VARCHAR(20) NOT NULL, 
+	clientid INT NOT NULL, 
+	CONSTRAINT agent_pk PRIMARY KEY(agentid), 
+	CONSTRAINT agent_fk_client FOREIGN KEY(clientid) REFERENCES client(clientid)
 );
 
 CREATE TABLE invoice
 (
-	invoiceno int not null, 
-	invoicedate DATE not null, 
-	agentid int not null, 
-	constraint invoice_pk primary key(invoiceno), 
-	constraint invoice_fk foreign key (agentid) references salesagent(agentid)
+	invoiceno INT NOT NULL AUTO_INCREMENT, 
+	invoicedate DATE NOT NULL, 
+	agentid INT NOT NULL, 
+	CONSTRAINT invoice_pk PRIMARY KEY(invoiceno), 
+	CONSTRAINT invoice_fk FOREIGN KEY (agentid) REFERENCES salesagent(agentid)
 );
 
 CREATE TABLE batch
 (
-	batchno int not null, 
-	batchdate DATE not null, 
-	agentid int not null, 
-	issuer varchar(20) not null, 
-	constraint batch_pk primary key(batchno), 
-	constraint batch_fk_agent foreign key(agentid) REFERENCES salesagent(agentid)
+	batchno INT NOT NULL AUTO_INCREMENT, 
+	batchdate DATE NOT NULL, 
+	agentid INT NOT NULL, 
+	issuer VARCHAR(20) NOT NULL, 
+	CONSTRAINT batch_pk PRIMARY KEY(batchno), 
+	CONSTRAINT batch_fk_agent FOREIGN KEY(agentid) REFERENCES salesagent(agentid)
 );
 
 CREATE TABLE item
 (
-	itemcode int not null, 
-	description varchar(100), 
-	srp decimal(7,2), 
-	constraint item_pk primary key(itemcode)
+	itemcode INT NOT NULL, 
+	description VARCHAR(100), 
+	srp DEC(7,2), 
+	CONSTRAINT item_pk PRIMARY KEY(itemcode)
 );
 
 CREATE TABLE discount
 (
-	clientid int not null, 
-	itemcode int not null, 
-	amount decimal(2,2) not null, 
-	constraint discount_pk primary key(clientid, itemcode), 
-	constraint discount_fk_client foreign key(clientid) references client(clientid), 
-	constraint discount_fk_item foreign key(itemcode) references item(itemcode)
+	clientid INT NOT NULL, 
+	itemcode INT NOT NULL, 
+	amount DEC(2,2) NOT NULL, 
+	CONSTRAINT discount_pk PRIMARY KEY(clientid, itemcode), 
+	CONSTRAINT discount_fk_client FOREIGN KEY(clientid) REFERENCES client(clientid), 
+	CONSTRAINT discount_fk_item FOREIGN KEY(itemcode) REFERENCES item(itemcode)
 );
 
 CREATE TABLE deliveryxitem
 (
-	deliveryid int not null, 
-	itemcode int not null, 
-	cost decimal(7,2) not null, 
-	quantity int not null, 
-	constraint di_pk primary key(deliveryid, itemcode), 
-	constraint di_fk_del foreign key(deliveryid) REFERENCES delivery(deliveryid), 
-	constraint di_fk_item foreign key(itemcode) REFERENCES item(itemcode)
+	deliveryid INT NOT NULL, 
+	itemcode INT NOT NULL, 
+	cost DEC(7,2) NOT NULL, 
+	quantity INT NOT NULL, 
+	CONSTRAINT di_pk PRIMARY KEY(deliveryid, itemcode), 
+	CONSTRAINT di_fk_del FOREIGN KEY(deliveryid) REFERENCES delivery(deliveryid), 
+	CONSTRAINT di_fk_item FOREIGN KEY(itemcode) REFERENCES item(itemcode)
 );
 
 CREATE TABLE itemxinvoice
 (
-	itemcode int not null, 
-	invoiceno int not null, 
-	quantity int not null, 
-	cost decimal(7,2) not null, 
-	constraint ii_pk primary key(itemcode, invoiceno), 
-	constraint ii_fk_item foreign key(itemcode) REFERENCES item(itemcode), 
-	constraint ii_fk_invoice foreign key(invoiceno) REFERENCES invoice(invoiceno)
+	itemcode INT NOT NULL, 
+	invoiceno INT NOT NULL, 
+	quantity INT NOT NULL, 
+	cost DEC(7,2) NOT NULL, 
+	CONSTRAINT ii_pk PRIMARY KEY(itemcode, invoiceno), 
+	CONSTRAINT ii_fk_item FOREIGN KEY(itemcode) REFERENCES item(itemcode), 
+	CONSTRAINT ii_fk_invoice FOREIGN KEY(invoiceno) REFERENCES invoice(invoiceno)
 );
 
 CREATE TABLE itemxbatch
 (
-	itemcode int not null, 
-	batchno int not null, 
-	quantity int not null, 
-	constraint ib_pk primary key(itemcode, batchno), 
-	constraint ib_fk_item foreign key(itemcode) REFERENCES item(itemcode), 
-	constraint ib_fk_batch foreign key(batchno) REFERENCES batch(batchno)
+	itemcode INT NOT NULL, 
+	batchno INT NOT NULL, 
+	quantity INT NOT NULL, 
+	CONSTRAINT ib_pk PRIMARY KEY(itemcode, batchno), 
+	CONSTRAINT ib_fk_item FOREIGN KEY(itemcode) REFERENCES item(itemcode), 
+	CONSTRAINT ib_fk_batch FOREIGN KEY(batchno) REFERENCES batch(batchno)
 );
 
 CREATE TABLE itemreturn
 (
-	batchno int not null, 
-	returndate DATE not null, 
-	constraint itemreturn_pk primary key (batchno), 
-	constraint itemreturn_fk foreign key(batchno) REFERENCES batch(batchno)
+	batchno INT NOT NULL, 
+	returndate DATE NOT NULL, 
+	CONSTRAINT itemreturn_pk PRIMARY KEY (batchno), 
+	CONSTRAINT itemreturn_fk FOREIGN KEY(batchno) REFERENCES batch(batchno)
 );
 
 CREATE TABLE transfer
 (
-	transferno int not null, 
-	sourcebatch int not null, 
-	desbatch int not null, 
-	transferdate DATE not null, 
-	itemcode int not null, 
-	quantity int not null, 
-	constraint transfer_pk primary key(transferno), 
-	constraint transfer_fk_sourceb foreign key(sourcebatch) REFERENCES batch(batchno), 
-	constraint transfer_fk_desb foreign key(desbatch) REFERENCES batch(batchno), 
-	constraint transfer_fk_item foreign key(itemcode) REFERENCES item(itemcode)
+	transferno INT NOT NULL AUTO_INCREMENT, 
+	sourcebatch INT NOT NULL, 
+	desbatch INT NOT NULL, 
+	transferdate DATE NOT NULL, 
+	itemcode INT NOT NULL, 
+	quantity INT NOT NULL, 
+	CONSTRAINT transfer_pk PRIMARY KEY(transferno), 
+	CONSTRAINT transfer_fk_sourceb FOREIGN KEY(sourcebatch) REFERENCES batch(batchno), 
+	CONSTRAINT transfer_fk_desb FOREIGN KEY(desbatch) REFERENCES batch(batchno), 
+	CONSTRAINT transfer_fk_item FOREIGN KEY(itemcode) REFERENCES item(itemcode)
 );
 
 CREATE TABLE manager
 (
-	managerid int not null,
-	constraint manager_pk primary key(managerid)
+	managerid INT NOT NULL,
+	CONSTRAINT manager_pk PRIMARY KEY(managerid)
 );
+
+ALTER TABLE staff AUTO_INCREMENT=10000;
+ALTER TABLE delivery AUTO_INCREMENT=20000;
+ALTER TABLE client AUTO_INCREMENT=30000;
+ALTER TABLE salesagent AUTO_INCREMENT=40000;
+ALTER TABLE invoice AUTO_INCREMENT=50000;
+ALTER TABLE batch AUTO_INCREMENT=60000;
+ALTER TABLE transfer AUTO_INCREMENT=70000;
 
 INSERT INTO item VALUES (12345, 'COFFEE', 50);

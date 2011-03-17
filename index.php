@@ -2,22 +2,25 @@
 
 	<head>
 		<title></title>
+		<script type = "text/javascript" src = "numericOnly.jsm"></script>
+		<?
+			function getID()
+			{
+				echo $_POST["userID"];
+			}
+		?>
 	</head>
 
 	<body>
 	
-		<?
-			$con = mysql_connect("localhost", "root", "root") or die('Could not connect: ' . mysql_error());
-			mysql_select_db("distribution", $con);
-		?>
+		<h1>Earthshaker</h1>
 		
-		<form name = "userview" action = "redirect.php" method = "POST">
-			<p>Which type of user are you?</p>
-			<input type = "radio" name = "group1" value = "manager" checked = "true"/>Manager<br>
-			<input type = "radio" name = "group1" value = "seller"/>Sales Agent<br>
-			<input type = "radio" name = "group1" value = "warehouse"/>Warehouse Staff<br>
+		<h2>Log In</h2>
+		<form name = "userview" action = "login.php" method = "POST">
+			<input type = "text" name = "userID" value = <? getID(); ?> onkeypress = "return numericOnly(event);" />
 			<input type = "submit" value = "Log In" />
 		</form>
+				
 	</body>	
 
 </html>

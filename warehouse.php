@@ -220,7 +220,7 @@
 				</th>
 				<tr>
 					<td><input type = "checkbox" name = "checkbox"/></td>
-					<td><select name= "itemType"><?getItemsFromDB();?></select></td>
+					<td><select name= "itemType"><? getItemsFromDB(); ?></select></td>
 					<td><input type = "text" name = "cost" onkeypress = "return numericOnly(event);"/></td>
 					<td><input type = "text" name = "quantity" onkeypress = "return numericOnly(event);"/></td>
 				</tr>
@@ -245,7 +245,7 @@
 				</th>
 				<tr>
 					<td><input type = "checkbox" name = "checkbox"/></td>
-					<td><select name= "itemType"><?getItemsFromDB();?></select></td>
+					<td><select name= "itemType"><? getItemsFromDB(); ?></select></td>
 					<td><input type = "text" name = "quantity" onkeypress = "return numericOnly(event);"/></td>
 				</tr>
 			</table>

@@ -1,3 +1,4 @@
 List of Assumptions:
 1. Distinct suppliers have distinct names.
 2. Warehouse staff can no longer add deliveries that were done more than 25 years ago.
+3. Warehouse staff do not accept deliveries that the managers are not aware of.

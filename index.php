@@ -8,7 +8,7 @@
 	
 		<?
 			$con = mysql_connect("localhost", "root", "root") or die('Could not connect: ' . mysql_error());
-			mysql_query("USE distribution");
+			mysql_select_db("distribution", $con);
 		?>
 		
 		<form name = "userview" action = "redirect.php" method = "POST">

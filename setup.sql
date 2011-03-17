@@ -128,7 +128,11 @@ CREATE TABLE transfer
 CREATE TABLE manager
 (
 	managerid int not null,
+	managerfname varchar(20) not null,
+	managerlname varchar(20) not null,
 	constraint manager_pk primary key(managerid)
 );
+
+INSERT INTO manager VALUES(10000, 'Fernando', 'Vitug');
 
 INSERT INTO item VALUES (12345, 'COFFEE', 50);

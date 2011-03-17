@@ -170,9 +170,6 @@
 		<?
 			function getItemsFromDB()
 			{
-				$con = mysql_connect("localhost", "root", "root") or die('Could not connect: ' . mysql_error());
-				mysql_select_db("distribution", $con);
-
 				$result = mysql_query("SELECT description FROM item");
 
 				while($row = mysql_fetch_array($result))
@@ -181,12 +178,15 @@
 					echo $row['description'];
 					echo "</option>";
 				}
-				mysql_close($con);
 			}
 		?>
 	</head>
 
 	<body onload = "initialize()">
+		<?
+			$con = mysql_connect("localhost", "root", "root") or die('Could not connect: ' . mysql_error());
+			mysql_select_db("distribution", $con) or die('Database not found: ' . mysql_error());
+		?>
 		<h1>Warehouse Staff</h1>
 		<h2>What would you like to do?</h2>
 		

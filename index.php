@@ -1,35 +1,43 @@
 <?
 	session_start();
 	include('config.inc');
-	if (isset($_SESSION['userID']) && isset($_SESSION['type'])) 
+	if (isset($_SESSION['userID'])) 
 	{
 		$id = $_SESSION['userID'];
-		$type = $_SESSION['type'];
-		if ($type = "staff")
+		if(isset($_SESSION['type']))
 		{
-			$result = mysql_query("SELECT * FROM staff WHERE staffid = '" . $id . "'"); 
-			if (mysql_num_rows($result) == 1)
+			$type = $_SESSION['type'];
+			if ($type = "staff")
 			{
-				header("Location: warehouse.php");
+				$result = mysql_query("SELECT * FROM staff WHERE staffid = '" . $id . "'"); 
+				if (mysql_num_rows($result) == 1)
+				{
+					header("Location: warehouse.php");
+				}
 			}
+			else if ($type = "salesagent")
+			{
+				$result = mysql_query("SELECT * FROM  salesagent WHERE agentid = '" . $id . "'");
+				if (mysql_num_rows($result) == 1)
+				{
+					header("Location: seller.php");
+				}
+			}
+			else if ($type = "manager")
+			{
+				$result = mysql_query("SELECT * FROM manager WHERE managerid = '" . $id . "'");
+				if (mysql_num_rows($result) == 1)
+				{
+					header("Location: manager.php");
+				}
+			}	
 		}
-		else if ($type = "salesagent")
+		else if (isset($_SESSION['error']))
 		{
-			$result = mysql_query("SELECT * FROM  salesagent WHERE agentid = '" . $id . "'");
-			if (mysql_num_rows($result) == 1)
-			{
-				header("Location: seller.php");
-			}
-		}
-		else if ($type = "manager")
-		{
-			$result = mysql_query("SELECT * FROM manager WHERE managerid = '" . $id . "'");
-			if (mysql_num_rows($result) == 1)
-			{
-				header("Location: manager.php");
-			}
+			session_destroy();
 		}
 	}
+	
 			
 	function getStoredID()
 	{

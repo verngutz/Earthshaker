@@ -7,7 +7,7 @@
 		if(isset($_SESSION['type']))
 		{
 			$type = $_SESSION['type'];
-			if ($type = "staff")
+			if ($type == "staff")
 			{
 				$result = mysql_query("SELECT * FROM staff WHERE staffid = '" . $id . "'"); 
 				if (mysql_num_rows($result) == 1)
@@ -15,7 +15,7 @@
 					header("Location: warehouse.php");
 				}
 			}
-			else if ($type = "salesagent")
+			else if ($type == "salesagent")
 			{
 				$result = mysql_query("SELECT * FROM  salesagent WHERE agentid = '" . $id . "'");
 				if (mysql_num_rows($result) == 1)
@@ -23,16 +23,17 @@
 					header("Location: seller.php");
 				}
 			}
-			else if ($type = "manager")
+			else if ($type == "manager")
 			{
 				$result = mysql_query("SELECT * FROM manager WHERE managerid = '" . $id . "'");
 				if (mysql_num_rows($result) == 1)
 				{
+					echo "shit";
 					header("Location: manager.php");
 				}
 			}	
 		}
-		else if (isset($_SESSION['error']))
+		if (isset($_SESSION['error']))
 		{
 			session_destroy();
 		}
@@ -43,6 +44,8 @@
 	{
 		if(isset($_SESSION['userID']))
 			echo $_SESSION['userID'];
+		else
+			echo "\"\"";
 	}
 
 ?>
@@ -61,14 +64,7 @@
 		<h2>Log In</h2>
 		<form name = "userview" action = "login.php" method = "POST">
 			<p>User ID: 
-			<? 
-				echo "<input type = \"text\"";
-				echo "name = \"userID\"";
-				echo "onkeypress = \"return numericOnly(event);\""; 
-				echo "value = "; 
-				echo getStoredID();
-				echo ">";
-			?>
+			<input type = "text" name = "userID" onkeypress = "return numericOnly(event);" value = <?  echo getStoredID(); ?> />
 			</p>
 			<input type = "submit" value = "Log In" />
 		</form>

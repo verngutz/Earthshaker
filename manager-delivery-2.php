@@ -2,15 +2,8 @@
 	<body>
 
 		<?php
-		$con = mysql_connect("localhost","","");
-		if (!$con)
-		  {
-		  die('Could not connect: ' . mysql_error());
-		  }
-
-		mysql_select_db("jv", $con);
-
-		$result = mysql_query("SELECT * FROM delivery WHERE delivery.deliveryid=$_POST["input1"]);
+		
+		$result = mysql_query("SELECT * FROM delivery WHERE deliveryid=$_POST['input1'] LIMIT 1");
 
 		echo "<table border='1'>
 		<tr>
@@ -35,7 +28,7 @@
 		
 		echo "<br>";
 		
-		$result2 = mysql_query("SELECT i.itemcode as 'itemcode', i.description as 'desc', di.quantity as 'quant', di.cost as 'cost', (di.quantity*di.cost) as 'total' FROM delivery d, item i, deliveryxitem di WHERE delivery.deliveryid=$_POST["input1"] AND delivery.deliveryid=deliveryxitem.deliveryid AND item.itemcode=deliveryxitem.itemcode);
+		$result2 = mysql_query("SELECT i.itemcode as 'itemcode', i.description as 'desc', di.quantity as 'quant', di.cost as 'cost', (di.quantity*di.cost) as 'total' FROM delivery d, item i, deliveryxitem di WHERE delivery.deliveryid=$_POST["input1"] AND delivery.deliveryid=deliveryxitem.deliveryid AND item.itemcode=deliveryxitem.itemcode");
 		
 		echo "<table border='1'>
 		<tr>
@@ -58,8 +51,6 @@
 		  }
 		echo "</table>";
 		
-		
-		mysql_close($con);
 		?> 
 		
 	</body>

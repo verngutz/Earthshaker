@@ -4,14 +4,14 @@ CREATE TABLE staff
 CREATE TABLE delivery
 (deliveryid int not null, deliverydate DATE not null, deliverytime time not null, staffid int not null, supplier varchar(20) not null, constraint delivery_pk primary key(deliveryid), constraint delivery_fk_staff foreign key(staffid) REFERENCES staff(staffid));
 
-CREATE TABLE invoice
-(invoiceno int not null, invoicedate DATE not null, constraint invoicekey primary key(invoiceno));
-
 CREATE TABLE client
 (clientid int not null, clientname varchar(20) not null, constraint client_pk primary key(clientid));
 
 CREATE TABLE salesagent
 (agentid int not null, agentlastname varchar(20) not null, agentfirstname varchar(20) not null, clientid int not null, constraint agent_pk primary key(agentid), constraint agent_fk_client foreign key(clientid) references client(clientid));
+
+CREATE TABLE invoice
+(invoiceno int not null, invoicedate DATE not null, agentid int not null, constraint invoice_pk primary key(invoiceno), constraint invoice_fk foreign key (agentid) references salesagent(agentid));
 
 CREATE TABLE batch
 (batchno int not null, batchdate DATE not null, agentid int not null, issuer varchar(20) not null, constraint batch_pk primary key(batchno), constraint batch_fk_agent foreign key(agentid) REFERENCES salesagent(agentid));

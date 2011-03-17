@@ -166,6 +166,24 @@
 			}
 				
 		</script>
+		
+		<?
+			function getItemsFromDB()
+			{
+				$con = mysql_connect("localhost", "root", "root") or die('Could not connect: ' . mysql_error());
+				mysql_select_db("distribution", $con);
+
+				$result = mysql_query("SELECT description FROM item");
+
+				while($row = mysql_fetch_array($result))
+				{
+					echo "<option>";
+					echo $row['description'];
+					echo "</option>";
+				}
+				mysql_close($con);
+			}
+		?>
 	</head>
 
 	<body onload = "initialize()">
@@ -202,7 +220,7 @@
 				</th>
 				<tr>
 					<td><input type = "checkbox" name = "checkbox"/></td>
-					<td><select name= "itemType"></select></td>
+					<td><select name= "itemType"><?getItemsFromDB();?></select></td>
 					<td><input type = "text" name = "cost" onkeypress = "return numericOnly(event);"/></td>
 					<td><input type = "text" name = "quantity" onkeypress = "return numericOnly(event);"/></td>
 				</tr>
@@ -227,7 +245,7 @@
 				</th>
 				<tr>
 					<td><input type = "checkbox" name = "checkbox"/></td>
-					<td><select name= "itemType"></select></td>
+					<td><select name= "itemType"><?getItemsFromDB();?></select></td>
 					<td><input type = "text" name = "quantity" onkeypress = "return numericOnly(event);"/></td>
 				</tr>
 			</table>

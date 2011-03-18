@@ -193,7 +193,7 @@
 		<p><input type = "checkbox" id = "manualdt" name = "manualdt" onclick = "updateDateTime()"> 
 			Tick to manually set the date and time.
 		</p>
-		<div id = "datetime">		
+		<div id = "datetime">
 			<p>Date: 
 				<select id = "yearchoice" onchange = "updateDayChoice()" name = "yearchoice"></select>
 				<select id = "monthchoice" onchange = "updateDayChoice()" name = "monthchoice"></select>
@@ -207,9 +207,8 @@
 		</div>
 			
 		<h3>Accept a New Delivery</h3>
-		<form name = "deli" action = "redirect.php" method = "post">
+		<form name = "deli" action = "deliconfirm.php" method = "post">
 			<p>Delivered by: <input type = "text" name = "supplier" value = "Supplier's Name"></p>
-			<p>Received by: <input type = "text" name = "supplier" value = "Staff's Name"></p>
 			
 			<caption>Delivery Items</caption>
 			<table id = "deliveryTable">
@@ -233,9 +232,8 @@
 		</form>
 		
 		<h3>Issue Items to Sales Agent</h3>
-		<form name = "issue" action = "redirect.php" method = "post">
+		<form name = "issue" action = "issueconfirm.php" method = "post">
 			<p>Issued to: <input type = "text" name = "supplier" value = "Sales Agent's Name"></p>
-			<p>Issued by: <input type = "text" name = "supplier" value = "Staff's Name"></p>
 			
 			<caption>Batch Items</caption>
 			<table id = "batchTable">

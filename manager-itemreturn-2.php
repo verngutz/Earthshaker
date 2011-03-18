@@ -6,7 +6,8 @@
 		mysql_select_db("distribution", $con);
 		$result = mysql_query("SELECT b.batchno as 'batchno', r.returndate as 'returndate', concat(s.agentlastname, ', ', s.agentfirstname) as 'agentname', c.clientname as 'clientname', i.itemcode as 'itemcode', i.description as 'desc', ib.quantity as 'quant'
 			FROM batch b, salesagent s, client c, itemreturn r, item i, itemxbatch ib
-			WHERE batch.agentid=salesagent.agentid AND salesagent.clientid=client.clientid AND batch.batchno=itemreturn.batchno AND itemxbatch.batchno=batch.batchno AND item.itemcode=itemxbatch.itemcode AND batch.batchno=itemreturn.batchno");
+			WHERE batch.agentid=salesagent.agentid AND salesagent.clientid=client.clientid AND batch.batchno=itemreturn.batchno AND itemxbatch.batchno=batch.batchno AND item.itemcode=itemxbatch.itemcode AND batch.batchno=itemreturn.batchno
+			ORDER BY itemreturn.batchno");
 
 		echo "<table border='1'>
 		<tr>

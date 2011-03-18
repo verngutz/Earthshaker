@@ -23,6 +23,12 @@
 			echo "<p>Date: " . $_POST['submityear2'] . "-" . $_POST['submitmonth2'] . "-" . $_POST['submitday2'] . "</p>";
 			echo "<p>Agent ID: " . $_POST['submitagent'] . "</p>";
 			echo "<p>Agent Name: " . $agent['agentfirstname'] . " " . $agent['agentlastname'] . "</p>";
+			if($agent['clientid'] != "")
+			{
+				$client = mysql_query("SELECT clientname FROM client WHERE clientid = '" . $agent['clientid'] . "'");
+				$clientname = mysql_fetch_array($client);
+				echo "<p>Client: " . $clientname['clientname'];
+			}
 			echo "<table>";
 			echo "<tr>";
 				echo "<th>Item ID</th>";

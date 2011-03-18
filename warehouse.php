@@ -245,7 +245,7 @@
 						else
 						{
 							document.getElementById("submititems2").value += type.value +
-								" " + type.options[type.selectedIndex].value + " " + quantity.value + " ";
+								" " + type.options[type.selectedIndex].text + " " + quantity.value + " ";
 						}
 					}
 					document.getElementById("submityear2").value = document.getElementById("yearchoice").value;

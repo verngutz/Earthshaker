@@ -146,6 +146,10 @@
         
 		<hr>
 		
+		<h3>Items in Hand</h3>
+			<? getBatchFromDB($_SESSION['userID']); ?>
+		<hr>
+		
         <h3>Sell Items</h3>
         <form name = "sell" action = "redirect.php" method = "post">
 		<caption>Items to Sell</caption>

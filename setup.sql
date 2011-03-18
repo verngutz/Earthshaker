@@ -1,9 +1,9 @@
 CREATE TABLE staff
 (
 	staffid INT NOT NULL AUTO_INCREMENT,
-	stafflname VARCHAR(20) NOT NULL, 
-	stafffname VARCHAR(20) NOT NULL, 
-	CONSTRAINT staffkey PRIMARY KEY(staffid)
+	stafflastname VARCHAR(20) NOT NULL, 
+	stafffirstname VARCHAR(20) NOT NULL, 
+	CONSTRAINT staff_pk PRIMARY KEY(staffid)
 );
 
 ALTER TABLE staff AUTO_INCREMENT = 10000000;
@@ -21,7 +21,7 @@ CREATE TABLE delivery
 
 ALTER TABLE delivery AUTO_INCREMENT = 20000000;
 
-CREATE TABLE client
+CREATE TABLE clients
 (
 	clientid INT NOT NULL AUTO_INCREMENT, 
 	clientname VARCHAR(20) NOT NULL, 

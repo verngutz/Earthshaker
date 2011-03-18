@@ -18,8 +18,6 @@
 				updateYearChoice();
 				addMonthChoice();
 				updateDayChoice();
-				addHourChoice();
-				addMinuteChoice();
 				var tableArray = new Array("deliveryTable", "batchTable");
 				hideTemplateRows(tableArray);
 			}
@@ -40,8 +38,6 @@
 					document.getElementById("monthchoice").selectedIndex = (new Date()).getMonth();
 					updateDayChoice();
 					document.getElementById("daychoice").selectedIndex = (new Date()).getDate() - 1;
-					document.getElementById("hourchoice").selectedIndex = (new Date()).getHours();
-					document.getElementById("minutechoice").selectedIndex = (new Date()).getMinutes();
 				}
 			}
 			
@@ -132,43 +128,6 @@
 				}
 			}
 			
-			function addHourChoice()
-			{
-				for (var i = 0; i < 24; i++)
-				{
-					var option = document.createElement("OPTION");
-					if((i + "").length == 1)
-					{
-						option.text = "0" + i;
-						option.value = "0" + i;
-					}
-					else if((i + "").length == 2)
-					{
-						option.text = i;
-						option.value = i;
-					}
-					document.getElementById("hourchoice").options.add(option);
-				}
-			}
-			
-			function addMinuteChoice()
-			{
-				for (var i = 0; i < 60; i++)
-				{
-					var option = document.createElement("OPTION");
-					if((i + "").length == 1)
-					{
-						option.text = "0" + i;
-						option.value = "0" + i;
-					}
-					else if((i + "").length == 2)
-					{
-						option.text = i;
-						option.value = i;
-					}
-					document.getElementById("minutechoice").options.add(option);
-				}
-			}
 		</script>
     </head>
     
@@ -177,18 +136,13 @@
         <h2>Would you like to do me?</h2>
         
     	<p><input type = "checkbox" id = "manualdt" name = "manualdt" onclick = "updateDateTime()"> 
-			Tick to manually set the date and time.
+			Tick to manually set the date.
 		</p>
 		<div id = "datetime">		
 			<p>Date: 
 				<select id = "yearchoice" onchange = "updateDayChoice()" name = "yearchoice"></select>
 				<select id = "monthchoice" onchange = "updateDayChoice()" name = "monthchoice"></select>
 				<select id = "daychoice" name = "daychoice"></select>
-			</p>
-				
-			<p>Time: 
-				<select id = "hourchoice" name = "hourchoice"></select> 
-				<select id = "minutechoice" name = "minutechoice"></select>
 			</p>
 		</div>
         

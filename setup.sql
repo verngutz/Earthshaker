@@ -14,7 +14,7 @@ CREATE TABLE delivery
 	deliverydate DATE NOT NULL,
 	deliverytime TIME NOT NULL,
 	staffid INT NOT NULL, 
-	supplier VARCHAR(20) NOT NULL, 
+	supplier VARCHAR(255) NOT NULL, 
 	CONSTRAINT delivery_pk PRIMARY KEY(deliveryid), 
 	CONSTRAINT delivery_fk_staff FOREIGN KEY(staffid) REFERENCES staff(staffid)
 );
@@ -24,7 +24,7 @@ ALTER TABLE delivery AUTO_INCREMENT = 20000000;
 CREATE TABLE client
 (
 	clientid INT NOT NULL AUTO_INCREMENT, 
-	clientname VARCHAR(20) NOT NULL, 
+	clientname VARCHAR(255) NOT NULL, 
 	CONSTRAINT client_pk PRIMARY KEY(clientid)
 );
 
@@ -58,9 +58,10 @@ CREATE TABLE batch
 	batchno INT NOT NULL AUTO_INCREMENT, 
 	batchdate DATE NOT NULL, 
 	agentid INT NOT NULL, 
-	issuer VARCHAR(20) NOT NULL, 
+	staffid INT NOT NULL, 
 	CONSTRAINT batch_pk PRIMARY KEY(batchno), 
-	CONSTRAINT batch_fk_agent FOREIGN KEY(agentid) REFERENCES salesagent(agentid)
+	CONSTRAINT batch_fk_agent FOREIGN KEY(agentid) REFERENCES salesagent(agentid),
+	CONSTRAINT batch_fk_staff FOREIGN KEY(staffid) REFERENCES staff(staffid)
 );
 
 ALTER TABLE batch AUTO_INCREMENT = 60000000;
@@ -101,7 +102,6 @@ CREATE TABLE itemxinvoice
 	itemcode INT NOT NULL, 
 	invoiceno INT NOT NULL, 
 	quantity INT NOT NULL,
-	cost DECIMAL(7,2) NOT NULL,
 	CONSTRAINT ii_pk PRIMARY KEY(itemcode, invoiceno), 
 	CONSTRAINT ii_fk_item FOREIGN KEY(itemcode) REFERENCES item(itemcode), 
 	CONSTRAINT ii_fk_invoice FOREIGN KEY(invoiceno) REFERENCES invoice(invoiceno)
@@ -151,6 +151,18 @@ CREATE TABLE manager
 
 ALTER TABLE manager AUTO_INCREMENT = 90000000;
 
-INSERT INTO manager (managerlastname, managerfirstname) VALUES('Vitug', 'Fernando');
-INSERT INTO staff (stafflastname, stafffirstname) VALUES('Anupol', 'Robin');
-INSERT INTO salesagent (agentlastname, agentfirstname, clientid) VALUES('Chua', 'Janine', NULL);
+LOAD DATA LOCAL INFILE "C:/es/client" INTO TABLE client(clientname);
+LOAD DATA LOCAL INFILE "C:/es/manager" INTO TABLE manager(managerlastname, managerfirstname);
+LOAD DATA LOCAL INFILE "C:/es/salesagent" INTO TABLE salesagent(agentlastname, agentfirstname, clientid);
+LOAD DATA LOCAL INFILE "C:/es/item" INTO TABLE item(description, srp);
+LOAD DATA LOCAL INFILE "C:/es/staff" INTO TABLE staff(stafflastname, stafffirstname);
+LOAD DATA LOCAL INFILE "C:/es/delivery" INTO TABLE delivery(deliverydate, deliverytime, staffid, supplier);
+LOAD DATA LOCAL INFILE "C:/es/invoice" INTO TABLE invoice(invoicedate, agentid);
+LOAD DATA LOCAL INFILE "C:/es/batch" INTO TABLE batch(batchdate, agentid, staffid);
+LOAD DATA LOCAL INFILE "C:/es/discount" INTO TABLE discount(clientid, itemcode, amount);
+LOAD DATA LOCAL INFILE "C:/es/deliveryxitem" INTO TABLE deliveryxitem;
+LOAD DATA LOCAL INFILE "C:/es/itemreturn" INTO TABLE itemreturn;
+LOAD DATA LOCAL INFILE "C:/es/itemxbatch" INTO TABLE itemxbatch;
+LOAD DATA LOCAL INFILE "C:/es/itemxinvoice" INTO TABLE itemxinvoice;
+LOAD DATA LOCAL INFILE "C:/es/transfer" INTO TABLE transfer(sourcebatch, desbatch, transferdate, itemcode, quantity);
+

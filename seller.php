@@ -131,6 +131,7 @@
     
     <body onload = "initializeMazingerZ()">
         
+		<h2>What would you like to do?</h2>
     	<p><input type = "checkbox" id = "manualdt" name = "manualdt" onclick = "updateDateTime()"> 
 			Tick to manually set the date.
 		</p>

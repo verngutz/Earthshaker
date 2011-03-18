@@ -45,7 +45,7 @@
 		if(isset($_SESSION['userID']))
 			echo $_SESSION['userID'];
 		else
-			echo "''";
+			echo "\"\"";
 	}
 
 ?>
@@ -58,13 +58,11 @@
 	</head>
 
 	<body>
-		
-		<hr>
-		
+	
 		<h2>Log In</h2>
 		<form name = "userview" action = "login.php" method = "POST">
 			<p>User ID: 
-			<input type = "text" name = "userID" onkeypress = "return numericOnly(event);" value = <?  echo getStoredID(); ?> />
+			<input type = "text" name = "userID" onkeypress = "return numericOnly(event);" value = <?  echo getStoredID(); ?> >
 			</p>
 			<input type = "submit" value = "Log In" />
 		</form>

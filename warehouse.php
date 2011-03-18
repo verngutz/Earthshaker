@@ -167,6 +167,93 @@
 					document.getElementById("minutechoice").options.add(option);
 				}
 			}
+			
+			function validateDelivery()
+			{
+				if(document.getElementById("supplier").value == "")
+				{
+					alert("Supplier field cannot be empty.");
+					document.getElementById("supplier").focus();
+					return false;
+				}
+				else
+				{
+					document.getElementById("submitsupplier").value = document.getElementById("supplier").value;
+					var table = document.getElementById("deliveryTable");
+					var rowCount = table.rows.length;
+					for(var i = 1; i < rowCount; i++) 
+					{
+						var row = table.rows[i];
+						var type = row.cells[1].childNodes[0];
+						var cost = row.cells[2].childNodes[0];
+						var quantity = row.cells[3].childNodes[0];
+						if(cost.value == "")
+						{
+							alert("Cost field cannot be empty");
+							row.cells[2].childNodes[0].focus();
+							return false;
+						}
+						else
+						{
+							if(quantity.value == "" || quantity.value == "0")
+							{
+								alert("Invalid quantity");
+								row.cells[3].childNodes[0].focus();
+								return false;
+							}
+							else
+							{
+								document.getElementById("submititems1").value += type.value +
+									" " + type.options[type.selectedIndex].text + " " + cost.value + " " + quantity.value + " ";
+							}
+						}
+					}
+					
+					document.getElementById("submityear1").value = document.getElementById("yearchoice").value;
+					document.getElementById("submitmonth1").value = document.getElementById("monthchoice").value;
+					document.getElementById("submitday1").value = document.getElementById("daychoice").value;
+					document.getElementById("submithour1").value = document.getElementById("hourchoice").value;
+					document.getElementById("submitminute1").value = document.getElementById("minutechoice").value;
+					return true;
+				}
+			}
+			
+			function validateIssuance()
+			{
+				if(document.getElementById("agent").value == "")
+				{
+					alert("Agent ID# cannot be empty.");
+					document.getElementById("agent").focus();
+					return false;
+				}
+				else
+				{
+					document.getElementById("submitagent").value = document.getElementById("agent").value;
+					var table = document.getElementById("batchTable");
+					var rowCount = table.rows.length;
+					for(var i = 1; i < rowCount; i++) 
+					{
+						var row = table.rows[i];
+						var type = row.cells[1].childNodes[0];
+						var quantity = row.cells[2].childNodes[0];
+						if(quantity.value == "" || quantity.value == "0")
+						{
+							alert("Invalid quantity");
+							row.cells[2].childNodes[0].focus();
+							return false;
+						}
+						else
+						{
+							document.getElementById("submititems2").value += type.value +
+								" " + type.options[type.selectedIndex].value + " " + quantity.value + " ";
+						}
+					}
+					document.getElementById("submityear2").value = document.getElementById("yearchoice").value;
+					document.getElementById("submitmonth2").value = document.getElementById("monthchoice").value;
+					document.getElementById("submitday2").value = document.getElementById("daychoice").value;
+					return true;
+				}
+			}
 				
 		</script>
 		
@@ -174,6 +261,7 @@
 
 	<body onload = "initialize()">
 	
+		<h2>What would you like to do?</h2>
 		<p><input type = "checkbox" id = "manualdt" name = "manualdt" onclick = "updateDateTime()"> 
 			Tick to manually set the date and time.
 		</p>
@@ -194,14 +282,14 @@
 		<hr>
 		
 		<h3>Accept a New Delivery</h3>
-		<form name = "deli" action = "deliconfirm.php" method = "post">
-			<p>Delivered by: <input type = "text" name = "supplier" value = "Supplier's Name"></p>
+		<form name = "deli" onsubmit = "return validateDelivery();" action = "deliconfirm.php" method = "post">
+			<p>Delivered by: <input type = "text" id = "supplier" name = "supplier" value = "Supplier's Name"></p>
 			
 			<caption>Delivery Items</caption>
 			<table id = "deliveryTable">
 				<tr>
 					<th></th>
-					<th>Item Type</th>
+					<th>Item Description</th>
 					<th>Cost</th>
 					<th>Quantity</th>
 				</tr>
@@ -216,20 +304,26 @@
 			<input type = "button" value = "Add New Delivery Item" onclick = "addRow('deliveryTable')"/>
 			<input type = "button" value = "Delete Selected Delivery Items" onclick = "deleteRow('deliveryTable')"/>
 			<br>
-			<input type = "submit" value = "Accept Delivery">
+			<input type = "hidden" id = "submityear1" name = "submityear1"/>
+			<input type = "hidden" id = "submitmonth1" name = "submitmonth1"/>
+			<input type = "hidden" id = "submitday1" name = "submitday1"/>
+			<input type = "hidden" id = "submithour1" name = "submithour1"/>
+			<input type = "hidden" id = "submitminute1" name = "submitminute1"/>
+			<input type = "hidden" id = "submitsupplier" name = "submitsupplier"/>
+			<input type = "hidden" id = "submititems1" name = "submititems1"/>
+			<input type = "submit" value = "Accept Delivery"/>
 		</form>
 		
 		<hr>
 		
 		<h3>Issue Items to Sales Agent</h3>
-		<form name = "issue" action = "issueconfirm.php" method = "post">
-			<p>Issue to Agent with ID#: <input type = "text" name = "supplier" onkeypress = "return numericOnly(event);"></p>
-			
+		<form name = "issue" onsubmit = "return validateIssuance();" action = "issueconfirm.php" method = "post">
+			<p>Issue to Agent ID#: <input type = "text" id = "agent" name = "agent" onkeypress = "return numericOnly(event);"></p>
 			<caption>Batch Items</caption>
 			<table id = "batchTable">
 				<tr>
 					<th></th>
-					<th>Item Type</th>
+					<th>Item Description</th>
 					<th>Quantity</th>
 				</tr>
 				<tr>
@@ -242,7 +336,12 @@
 			<input type = "button" value = "Add New Batch Item" onclick = "addRow('batchTable')"/>
 			<input type = "button" value = "Delete Selected Batch Items" onclick = "deleteRow('batchTable')"/>
 			<br>
-			<input type = "submit" value = "Issue Items">
+			<input type = "hidden" id = "submityear2" name = "submityear2"/>
+			<input type = "hidden" id = "submitmonth2" name = "submitmonth2"/>
+			<input type = "hidden" id = "submitday2" name = "submitday2"/>
+			<input type = "hidden" id = "submitagent" name = "submitagent"/>
+			<input type = "hidden" id = "submititems2" name = "submititems2"/>
+			<input type = "submit" value = "Issue Items"/>
 		</form>
 		
 		<hr>

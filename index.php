@@ -1,6 +1,7 @@
 <?
 	session_start();
-	include('config.inc');
+	include('sitehead.php');
+	include('config.php');
 	if (isset($_SESSION['userID'])) 
 	{
 		$id = $_SESSION['userID'];
@@ -28,7 +29,6 @@
 				$result = mysql_query("SELECT * FROM manager WHERE managerid = '" . $id . "'");
 				if (mysql_num_rows($result) == 1)
 				{
-					echo "shit";
 					header("Location: manager.php");
 				}
 			}	
@@ -58,18 +58,22 @@
 	</head>
 
 	<body>
-
-		<h1>Earthshaker</h1>
-		
+	
 		<h2>Log In</h2>
 		<form name = "userview" action = "login.php" method = "POST">
 			<p>User ID: 
-			<input type = "text" name = "userID" onkeypress = "return numericOnly(event);" value = <?  echo getStoredID(); ?> />
+			<input type = "text" name = "userID" onkeypress = "return numericOnly(event);" value = <?  echo getStoredID(); ?> >
 			</p>
 			<input type = "submit" value = "Log In" />
 		</form>
 		<p id = "error"><? if (isset($_SESSION['error'])) echo $_SESSION['error']; ?></p>
+		
+		<hr>
 				
-	</body>	
+	</body>
+	
+	<footer>
+		© 2011 by Earthshaker
+	</footer>
 
 </html>

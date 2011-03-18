@@ -1,5 +1,4 @@
 <?
-	include("config.inc");
 	include("sellerhead.php");
 ?>
 
@@ -18,8 +17,7 @@
 				updateYearChoice();
 				addMonthChoice();
 				updateDayChoice();
-				var tableArray = new Array("deliveryTable", "batchTable");
-				hideTemplateRows(tableArray);
+				var tableArray = new Array("sellTable", "transferTable");
 			}
 			
 			function updateDateTime()
@@ -132,13 +130,12 @@
     </head>
     
     <body onload = "initializeMazingerZ()">
-    	<h1>Sales Agent</h1>
-        <h2>Would you like to do me?</h2>
         
     	<p><input type = "checkbox" id = "manualdt" name = "manualdt" onclick = "updateDateTime()"> 
 			Tick to manually set the date.
 		</p>
-		<div id = "datetime">		
+		
+		<div id = "datetime">
 			<p>Date: 
 				<select id = "yearchoice" onchange = "updateDayChoice()" name = "yearchoice"></select>
 				<select id = "monthchoice" onchange = "updateDayChoice()" name = "monthchoice"></select>
@@ -146,36 +143,62 @@
 			</p>
 		</div>
         
+		<hr>
+		
         <h3>Sell Items</h3>
         <form name = "sell" action = "redirect.php" method = "post">
-        	<p>Invoice Number: <input type = "text" name = "invoiceNo" onkeypress = "return numericOnly(event);"></p>
-            <input type = "submit" value = "Accept Invoice">
-        </form>
-        
-        <h3>Transfer Items</h3>
-        <form name = "tran" action = "redirect.php" method = "post">
-        	<p>Source Batch: <input type = "text" name "batch" value = "Batch No."></p>
-            <p>Destination Batch: <input type = "text" name "batch" value = "Batch No."></p>
-            
-            <caption>Transferrable Items</caption>
-            <table id = "transferTable">
+		<caption>Items to Sell</caption>
+            <table id = "sellTable">
             	<tr>
+					<th></th>
                 	<th>Item Type</th>
                     <th>Quantity</th>
                 </tr>
             	<tr>
-                	<td><select name = "itemType"></select></td>
+					<td><input type = "checkbox" name = "checkbox"/></td>
+                	<td><select name = "itemType"><? getItemsFromDB(); ?></select></td>
 					<td><input type = "text" name = "quantity" onkeypress = "return numericOnly(event);"/></td>
                 </tr>
             </table>
+			
+			<input type = "button" value = "Add New Transaction Item" onclick = "addRow('sellTable')"/>
+			<input type = "button" value = "Delete Selected Transaction Items" onclick = "deleteRow('sellTable')"/>
+			<br>
+            <input type = "submit" value = "Accept Transaction">
+        </form>
+        
+		<hr>
+		
+        <h3>Transfer Items</h3>
+        <form name = "tran" action = "redirect.php" method = "post">
+        	<p>Transfer to Sales Agent with ID#: <input type = "text" name "destagent"></p>
+            
+            <caption>Items to Transfer:</caption>
+            <table id = "transferTable">
+            	<tr>
+					<th></th>
+                	<th>Item Type</th>
+                    <th>Quantity</th>
+                </tr>
+            	<tr>
+					<td><input type = "checkbox" name = "checkbox"/></td>
+                	<td><select name = "itemType"><? getItemsFromDB(); ?></select></td>
+					<td><input type = "text" name = "quantity" onkeypress = "return numericOnly(event);"/></td>
+                </tr>
+            </table>
+			
+			<input type = "button" value = "Add New Transfer Item" onclick = "addRow('transferTable')"/>
+			<input type = "button" value = "Delete Selected Transfer Items" onclick = "deleteRow('transferTable')"/>
+			<br>
             <input type = "submit" value = "Accept Transfer">
         </form>
         
-        <h3>Return Items</h3>
-        <form name = "retu" action = "redirect.php" method = "post">
-        	<p>Batch Number: <input type = "text" name = "batchNo" onkeypress = "return numericOnly(event);"/></p>
-            <input type = "submit" value = "Accept Return">
-        </form>
-        
+		<hr>
+		
     </body>
+	
+	<footer>
+		© 2011 by Earthshaker
+	</footer>
+	
 </html>

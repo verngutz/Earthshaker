@@ -1,5 +1,5 @@
 <?
-	include('config.inc');
+	include('config.php');
 	session_start();
 	$id = $_POST['userID'];
 	$_SESSION['userID'] = $id;

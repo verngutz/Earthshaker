@@ -1,5 +1,4 @@
 <?
-	include("config.inc");
 	include("managerhead.php");
 ?>
 

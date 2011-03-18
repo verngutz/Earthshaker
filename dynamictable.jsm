@@ -47,23 +47,21 @@ function deleteRow(tableID)
 {
 	var table = document.getElementById(tableID);
 	var rowCount = table.rows.length;
-
-	for(var i = 2; i < rowCount; i++) 
+ 
+	for(var i = 1; i < rowCount; i++) 
 	{
 		var row = table.rows[i];
 		var checkbox = row.cells[0].childNodes[0];
-		if(checkbox != null && checkbox.checked) 
+		if(checkbox != null && checkbox.checked)
 		{
+			if(rowCount <= 2)
+			{
+				alert("Cannot delete all the rows.");
+				break;
+			}
 			table.deleteRow(i);
 			rowCount--;
 			i--;
 		}
 	}
-	
-	if(rowCount <= 2)
-	{
-		table.rows[0].style.visibility = 'hidden';
-		table.rows[0].style.display = 'none';
-	}
-	
 }

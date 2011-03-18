@@ -1,5 +1,4 @@
 <?
-	include("config.inc");
 	include("warehousehead.php");
 ?>
 
@@ -21,7 +20,6 @@
 				addHourChoice();
 				addMinuteChoice();
 				var tableArray = new Array("deliveryTable", "batchTable");
-				hideTemplateRows(tableArray);
 			}
 			
 			function updateDateTime()
@@ -172,27 +170,14 @@
 				
 		</script>
 		
-		<?
-			function getItemsFromDB()
-			{
-				$result = mysql_query("SELECT description FROM item");
-
-				while($row = mysql_fetch_array($result))
-				{
-					echo "<option>";
-					echo $row['description'];
-					echo "</option>";
-				}
-			}
-		?>
 	</head>
 
 	<body onload = "initialize()">
-		<h1>Warehouse Staff</h1>
-		<h2>What would you like to do?</h2>
+	
 		<p><input type = "checkbox" id = "manualdt" name = "manualdt" onclick = "updateDateTime()"> 
 			Tick to manually set the date and time.
 		</p>
+		
 		<div id = "datetime">
 			<p>Date: 
 				<select id = "yearchoice" onchange = "updateDayChoice()" name = "yearchoice"></select>
@@ -205,18 +190,21 @@
 				<select id = "minutechoice" name = "minutechoice"></select>
 			</p>
 		</div>
-			
+		
+		<hr>
+		
 		<h3>Accept a New Delivery</h3>
 		<form name = "deli" action = "deliconfirm.php" method = "post">
 			<p>Delivered by: <input type = "text" name = "supplier" value = "Supplier's Name"></p>
 			
 			<caption>Delivery Items</caption>
 			<table id = "deliveryTable">
-				<th>
-					<td>Item Type</td>
-					<td>Cost</td>
-					<td>Quantity</td>
-				</th>
+				<tr>
+					<th></th>
+					<th>Item Type</th>
+					<th>Cost</th>
+					<th>Quantity</th>
+				</tr>
 				<tr>
 					<td><input type = "checkbox" name = "checkbox"/></td>
 					<td><select name= "itemType"><? getItemsFromDB(); ?></select></td>
@@ -231,16 +219,19 @@
 			<input type = "submit" value = "Accept Delivery">
 		</form>
 		
+		<hr>
+		
 		<h3>Issue Items to Sales Agent</h3>
 		<form name = "issue" action = "issueconfirm.php" method = "post">
-			<p>Issued to: <input type = "text" name = "supplier" value = "Sales Agent's Name"></p>
+			<p>Issue to Agent with ID#: <input type = "text" name = "supplier" onkeypress = "return numericOnly(event);"></p>
 			
 			<caption>Batch Items</caption>
 			<table id = "batchTable">
-				<th>
-					<td>Item Type</td>
-					<td>Quantity</td>
-				</th>
+				<tr>
+					<th></th>
+					<th>Item Type</th>
+					<th>Quantity</th>
+				</tr>
 				<tr>
 					<td><input type = "checkbox" name = "checkbox"/></td>
 					<td><select name= "itemType"><? getItemsFromDB(); ?></select></td>
@@ -253,9 +244,13 @@
 			<br>
 			<input type = "submit" value = "Issue Items">
 		</form>
-	
-		<p id = "debug">
-		</p>
+		
+		<hr>
+		
 	</body>
+	
+	<footer>
+		© 2011 by Earthshaker
+	</footer>
 	
 </html>

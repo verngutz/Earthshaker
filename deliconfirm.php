@@ -24,7 +24,7 @@
 				echo "<th>Quantity</th>";
 			echo "</tr>";
 			
-			$itempieces = explode(" ", $_POST['submititems1']);
+			$itempieces = explode("$", $_POST['submititems1']);
 			for($i = 0; $i < count($itempieces) - 4; $i += 4)
 			{
 				echo "<tr>";
@@ -38,13 +38,13 @@
 		?>
 		
 		<form action = "processdeli.php" method = "post">
-			<input type = "hidden" id = "submityear1" name = "submityear1" value = <? $_POST['submityear1'] ?>/>
-			<input type = "hidden" id = "submitmonth1" name = "submitmonth1" value = <? $_POST['submitmonth1'] ?>/>
-			<input type = "hidden" id = "submitday1" name = "submitday1" value = <? $_POST['submitday1'] ?>/>
-			<input type = "hidden" id = "submithour1" name = "submithour1" value = <? $_POST['submithour1'] ?>/>
-			<input type = "hidden" id = "submitminute1" name = "submitminute1" value = <? $_POST['submitminute1'] ?>/>
-			<input type = "hidden" id = "submitsupplier" name = "submitsupplier" value = <? $_POST['submitsupplier'] ?>/>
-			<input type = "hidden" id = "submititems1" name = "submititems1" value = <? $_POST['submititems1'] ?>/>
+			<input type = "hidden" id = "submityear1" name = "submityear1" value = <? echo $_POST['submityear1']; ?>>
+			<input type = "hidden" id = "submitmonth1" name = "submitmonth1" value = <? echo $_POST['submitmonth1']; ?>>
+			<input type = "hidden" id = "submitday1" name = "submitday1" value = <? echo $_POST['submitday1']; ?>>
+			<input type = "hidden" id = "submithour1" name = "submithour1" value = <? echo $_POST['submithour1']; ?>>
+			<input type = "hidden" id = "submitminute1" name = "submitminute1" value = <? echo $_POST['submitminute1']; ?>>
+			<input type = "hidden" id = "submitsupplier" name = "submitsupplier" value = <? echo $_POST['submitsupplier']; ?>>
+			<input type = "hidden" id = "submititems1" name = "submititems1" value = <? echo $_POST['submititems1']; ?>>
             <input type = "submit" value = "Confirm">
 		</form>
 		
@@ -53,5 +53,7 @@
 		</form>
 		
 	</body>
+	
+	<? include ("sitefoot.php"); ?>
 	
 </html>

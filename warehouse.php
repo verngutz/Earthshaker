@@ -204,7 +204,7 @@
 							else
 							{
 								document.getElementById("submititems1").value += type.value +
-									" " + type.options[type.selectedIndex].text + " " + cost.value + " " + quantity.value + " ";
+									"$" + type.options[type.selectedIndex].text + "$" + cost.value + "$" + quantity.value + "$";
 							}
 						}
 					}
@@ -245,7 +245,7 @@
 						else
 						{
 							document.getElementById("submititems2").value += type.value +
-								" " + type.options[type.selectedIndex].text + " " + quantity.value + " ";
+								"$" + type.options[type.selectedIndex].text + "$" + quantity.value + "$";
 						}
 					}
 					document.getElementById("submityear2").value = document.getElementById("yearchoice").value;
@@ -319,6 +319,7 @@
 		<h3>Issue Items to Sales Agent</h3>
 		<form name = "issue" onsubmit = "return validateIssuance();" action = "issueconfirm.php" method = "post">
 			<p>Issue to Agent ID#: <input type = "text" id = "agent" name = "agent" onkeypress = "return numericOnly(event);"></p>
+			<p><input type = "checkbox" name = "newbatch"/>First time issuing to this sales agent this week?</p>
 			<caption>Batch Items</caption>
 			<table id = "batchTable">
 				<tr>
@@ -344,12 +345,8 @@
 			<input type = "submit" value = "Issue Items"/>
 		</form>
 		
-		<hr>
-		
 	</body>
 	
-	<footer>
-		© 2011 by Earthshaker
-	</footer>
+	<? include ("sitefoot.php"); ?>
 	
 </html>

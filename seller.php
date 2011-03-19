@@ -126,6 +126,57 @@
 				}
 			}
 			
+			function validateInvoice()
+			{
+				var batchTable = document.getElementById("batchTable");
+				var batchTableRowCount = batchTable.rows.length;
+				
+				var table = document.getElementById("sellTable");
+				var rowCount = table.rows.length;
+				for(var i = 1; i < rowCount; i++) 
+				{
+					var row = table.rows[i];
+					var typenode = row.cells[1].childNodes[0];
+					var type = typenode.options[typenode.selectedIndex].text;
+					var quantity = row.cells[2].childNodes[0];
+					
+					
+					if(quantity.value == "" || quantity.value == "0")
+					{
+						alert("Invalid quantity");
+						row.cells[2].childNodes[0].focus();
+						return false;
+					}
+					else
+					{
+						var quantityavailable = 0;
+						for(var j = 0; j < batchTableRowCount; j++)
+						{
+							if(batchTable.rows[j].cells[0].innerHTML == typenode.value)
+							{
+								quantityavailable = parseInt(batchTable.rows[j].cells[2].innerHTML);
+								break;
+							}
+						}
+						if (parseInt(quantity.value) > quantityavailable)
+						{
+							alert("Requested quantity is larger than quantity in hand for item: " + type);
+							row.cells[2].childNodes[0].focus();
+							return false;
+						}
+						else
+						{
+							document.getElementById("submititems2").value += typenode.value +
+								"$" + type + "$" + quantity.value + "$";
+						}
+					}
+				}
+				document.getElementById("submityear2").value = document.getElementById("yearchoice").value;
+				document.getElementById("submitmonth2").value = document.getElementById("monthchoice").value;
+				document.getElementById("submitday2").value = document.getElementById("daychoice").value;
+				return true;
+			}
+			
 		</script>
     </head>
     
@@ -146,9 +197,13 @@
         
 		<hr>
 		
-        <h3>Sell Items</h3>
-        <form name = "sell" action = "redirect.php" method = "post">
-		<caption>Items to Sell</caption>
+		<h3>Items in Hand</h3>
+			<? getBatchFromDB($_SESSION['userID']); ?>
+		<hr>
+		
+        <h3>Submit a Sales Invoice</h3>
+        <form name = "sell" action = "sellconfirm.php" method = "post" onsubmit = "return validateInvoice();">
+		<caption>Items Sold</caption>
             <table id = "sellTable">
             	<tr>
 					<th></th>
@@ -174,7 +229,7 @@
         <form name = "tran" action = "redirect.php" method = "post">
         	<p>Transfer to Sales Agent with ID#: <input type = "text" name "destagent"></p>
             
-            <caption>Items to Transfer:</caption>
+            <caption>Items to Transfer</caption>
             <table id = "transferTable">
             	<tr>
 					<th></th>
@@ -193,13 +248,9 @@
 			<br>
             <input type = "submit" value = "Accept Transfer">
         </form>
-        
-		<hr>
 		
     </body>
 	
-	<footer>
-		© 2011 by Earthshaker
-	</footer>
+	<? include ("sitefoot.php"); ?>
 	
 </html>

@@ -37,7 +37,7 @@ CREATE TABLE salesagent
 	agentfirstname VARCHAR(20) NOT NULL,
 	clientid INT,
 	CONSTRAINT agent_pk PRIMARY KEY(agentid), 
-	CONSTRAINT agent_fk_client FOREIGN KEY(clientid) REFERENCES client(clientid),
+	CONSTRAINT agent_fk_client FOREIGN KEY(clientid) REFERENCES client(clientid)
 );
 
 ALTER TABLE salesagent AUTO_INCREMENT = 40000000;
@@ -56,12 +56,21 @@ ALTER TABLE invoice AUTO_INCREMENT = 50000000;
 CREATE TABLE batch
 (
 	batchno INT NOT NULL AUTO_INCREMENT, 
-	batchdate DATE NOT NULL, 
 	agentid INT NOT NULL, 
-	staffid INT NOT NULL, 
 	CONSTRAINT batch_pk PRIMARY KEY(batchno), 
-	CONSTRAINT batch_fk_agent FOREIGN KEY(agentid) REFERENCES salesagent(agentid),
-	CONSTRAINT batch_fk_staff FOREIGN KEY(staffid) REFERENCES staff(staffid)
+	CONSTRAINT batch_fk_agent FOREIGN KEY(agentid) REFERENCES salesagent(agentid)
+);
+
+CREATE TABLE issuance
+(
+	batchno INT NOT NULL,
+	issuedate DATE NOT NULL,
+	agentid INT NOT NULL,
+	staffid INT NOT NULL,
+	CONSTRAINT issuance_pk PRIMARY KEY(batchno, issuedate, staffid),
+	CONSTRAINT issuance_fk_batchno FOREIGN KEY(batchno) REFERENCES batch(batchno),
+	CONSTRAINT issuance_fk_agentid FOREIGN KEY(agentid) REFERENCES salesagent(agentid),
+	CONSTRAINT issuance_fk_staff FOREIGN KEY(staffid) REFERENCES staff(staffid)
 );
 
 ALTER TABLE batch AUTO_INCREMENT = 60000000;
@@ -156,13 +165,5 @@ LOAD DATA LOCAL INFILE "C:/es/manager" INTO TABLE manager(managerlastname, manag
 LOAD DATA LOCAL INFILE "C:/es/salesagent" INTO TABLE salesagent(agentlastname, agentfirstname, clientid);
 LOAD DATA LOCAL INFILE "C:/es/item" INTO TABLE item(description, srp);
 LOAD DATA LOCAL INFILE "C:/es/staff" INTO TABLE staff(stafflastname, stafffirstname);
-LOAD DATA LOCAL INFILE "C:/es/delivery" INTO TABLE delivery(deliverydate, deliverytime, staffid, supplier);
-LOAD DATA LOCAL INFILE "C:/es/invoice" INTO TABLE invoice(invoicedate, agentid);
-LOAD DATA LOCAL INFILE "C:/es/batch" INTO TABLE batch(batchdate, agentid, staffid);
 LOAD DATA LOCAL INFILE "C:/es/discount" INTO TABLE discount(clientid, itemcode, amount);
-LOAD DATA LOCAL INFILE "C:/es/deliveryxitem" INTO TABLE deliveryxitem;
-LOAD DATA LOCAL INFILE "C:/es/itemreturn" INTO TABLE itemreturn;
-LOAD DATA LOCAL INFILE "C:/es/itemxbatch" INTO TABLE itemxbatch;
-LOAD DATA LOCAL INFILE "C:/es/itemxinvoice" INTO TABLE itemxinvoice;
-LOAD DATA LOCAL INFILE "C:/es/transfer" INTO TABLE transfer(sourcebatch, desbatch, transferdate, itemcode, quantity);
 

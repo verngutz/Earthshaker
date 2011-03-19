@@ -2,13 +2,17 @@
 	<body>
 
 		<?php
-		$con = mysql_connect("localhost", "root", "root") or die('Could not connect: ' . mysql_error());
+		$con = mysql_connect("localhost", "root", "") or die('Could not connect: ' . mysql_error());
 		mysql_select_db("distribution", $con);
-		$result = mysql_query("SELECT i.invoiceno as 'invoiceno',i.invoicedate as 'invoicedate', concat(s.agentlastname,', ',s.agentfirstname) as 'agentname', c.clientname as 'clientname', it.itemcode as 'itemcode', it.description as 'desc', ii.quantity as 'quant', it.srp as 'srp', d.amount as 'discount', (ii.quantity*it.srp*(100-d.amount)/100) as 'saleprice'
-							FROM item it, discount d, itemxinvoice ii, salesagent s, invoice i, client c
-							WHERE invoice.agentid=salesagent.agentid AND salesagent.clientid=client.clientid AND salesagent.clientid=discount.clientid AND salesagent.agentid=invoice.agentid AND invoice.invoiceno=itemxinvoice.invoiceno AND itemxinvoice.itemcode=item.itemcode
-							ORDER BY invoice.invoiceno"
-							);
+		$result = mysql_query("
+		
+		SELECT i.invoiceno as 'invoiceno',i.invoicedate as 'invoicedate', concat(s.agentlastname,', ',s.agentfirstname) as 'agentname', c.clientname as 'clientname', it.itemcode as 'itemcode', it.description as 'desc', ii.quantity as 'quant', it.srp as 'srp', d.amount as 'discount', (ii.quantity*it.srp*(100-d.amount)/100) as 'saleprice'
+		FROM item it, discount d, itemxinvoice ii, salesagent s, invoice i, client c
+		WHERE i.agentid=s.agentid AND s.clientid=c.clientid AND s.clientid=d.clientid AND s.agentid=i.agentid AND i.invoiceno=ii.invoiceno AND ii.itemcode=it.itemcode
+		ORDER BY i.invoiceno
+		
+		
+		");
 
 		echo "<table border='1'>
 		<tr>

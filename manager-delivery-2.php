@@ -2,12 +2,18 @@
 	<body>
 
 		<?php
-		$con = mysql_connect("localhost", "root", "root") or die('Could not connect: ' . mysql_error());
+		$con = mysql_connect("localhost", "root", "") or die('Could not connect: ' . mysql_error());
 		mysql_select_db("distribution", $con);
-		$result = mysql_query("SELECT d.deliveryid as 'deliveryid', d.deliverydate as 'deliverydate', d.deliverytime as 'deliverytime', concat(staff.stafflname, ', ', staff.stafffname) as 'name', d.supplier as 'supplier', i.itemcode as 'itemcode', i.description as 'desc', di.quantity as 'quant', di.cost as 'cost', (di.quantity*di.cost) as 'total'
+		$result = mysql_query("
+		
+		SELECT d.deliveryid as 'deliveryid', d.deliverydate as 'deliverydate', d.deliverytime as 'deliverytime',
+		concat(s.stafflastname, ', ', s.stafffirstname) as 'name', d.supplier as 'supplier', i.itemcode as 'itemcode',
+		i.description as 'desc', di.quantity as 'quant', di.cost as 'cost', (di.quantity*di.cost) as 'total'
 		FROM delivery d, staff s, item i, deliveryxitem di
-		WHERE staff.staffid=delivery.staffid AND delivery.deliveryid=deliveryxitem.deliveryid AND item.itemcode=deliveryxitem.itemcode
-		ORDER BY delivery.deliveryid");
+		WHERE s.staffid=d.staffid AND d.deliveryid=di.deliveryid AND i.itemcode=di.itemcode
+		ORDER BY d.deliveryid
+		
+		");
 
 		echo "<table border='1'>
 		<tr>

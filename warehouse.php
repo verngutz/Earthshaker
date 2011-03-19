@@ -319,6 +319,7 @@
 		<h3>Issue Items to Sales Agent</h3>
 		<form name = "issue" onsubmit = "return validateIssuance();" action = "issueconfirm.php" method = "post">
 			<p>Issue to Agent ID#: <input type = "text" id = "agent" name = "agent" onkeypress = "return numericOnly(event);"></p>
+			<p><input type = "checkbox" name = "newbatch"/>First time issuing to this sales agent this week?</p>
 			<caption>Batch Items</caption>
 			<table id = "batchTable">
 				<tr>
@@ -344,12 +345,8 @@
 			<input type = "submit" value = "Issue Items"/>
 		</form>
 		
-		<hr>
-		
 	</body>
 	
-	<footer>
-		© 2011 by Earthshaker
-	</footer>
+	<? include ("sitefoot.php"); ?>
 	
 </html>

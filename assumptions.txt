@@ -4,3 +4,8 @@ List of Assumptions:
 3. Warehouse staff do not accept deliveries that the managers are not aware of.
 4. There won't be more than 10, 000, 000 entries per table.
 5. The sales agents are assumed to sell all items based on the SRP and the corresponding client discounts only.
+
+Limitations:
+1. Items are not classified into time pieces, digital cameras and accessories, mobile phones, and small appliances.
+2. There is no way to update the system in case items are lost, destroyed, or stolen.
+3. Supplier's Names can't have apostrophes.

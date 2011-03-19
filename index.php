@@ -67,13 +67,9 @@
 			<input type = "submit" value = "Log In" />
 		</form>
 		<p id = "error"><? if (isset($_SESSION['error'])) echo $_SESSION['error']; ?></p>
-		
-		<hr>
 				
 	</body>
 	
-	<footer>
-		© 2011 by Earthshaker
-	</footer>
-
+	<? include("sitefoot.php"); ?>
+	
 </html>

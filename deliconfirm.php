@@ -54,4 +54,6 @@
 		
 	</body>
 	
+	<? include ("sitefoot.php"); ?>
+	
 </html>

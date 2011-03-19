@@ -16,7 +16,7 @@
 	function getBatchFromDB($userID)
 	{
 		$result = mysql_query("SELECT * FROM batch WHERE agentid = " . $userID . " ORDER BY batchno DESC LIMIT 1");
-		echo "<table>";
+		echo "<table id = 'batchTable'>";
 			echo "<tr>";
 				echo "<th>Item ID</th>";
 				echo "<th>Item Description</th>";

@@ -1,16 +1,4 @@
-var EXPORTED_SYMBOLS = ["hideTemplateRows", "addRow", "deleteRow"];
-
-function hideTemplateRows(tableID)
-{
-	for(var i = 0; i < tableID.length; i++)
-	{
-		var table = document.getElementById(tableID[i]);
-		table.rows[0].style.visibility = 'hidden';
-		table.rows[0].style.display = 'none';
-		table.rows[1].style.visibility = 'hidden';
-		table.rows[1].style.display = 'none';
-	}
-}
+var EXPORTED_SYMBOLS = ["addRow", "deleteRow"];
 
 function addRow(tableID) 
 {

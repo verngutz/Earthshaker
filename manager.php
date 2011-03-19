@@ -32,8 +32,6 @@
 		</form>
 	</body>	
 
-	<footer>
-		© 2011 by Earthshaker
-	</footer>
+	<? include ("sitefoot.php"); ?>
 	
 </html>

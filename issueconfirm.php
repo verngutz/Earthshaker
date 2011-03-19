@@ -23,6 +23,16 @@
 			echo "<p>Date: " . $_POST['submityear2'] . "-" . $_POST['submitmonth2'] . "-" . $_POST['submitday2'] . "</p>";
 			echo "<p>Agent ID: " . $_POST['submitagent'] . "</p>";
 			echo "<p>Agent Name: " . $agent['agentfirstname'] . " " . $agent['agentlastname'] . "</p>";
+			echo "<p>Type of Action: ";
+			if(isset($_POST['newbatch']))
+			{
+				echo "New Batch";
+			}
+			else
+			{
+				echo "Adding to Already-held Batch";
+			}
+			echo "</p>";
 			if($agent['clientid'] != "")
 			{
 				$client = mysql_query("SELECT clientname FROM client WHERE clientid = '" . $agent['clientid'] . "'");
@@ -54,6 +64,7 @@
 			<input type = "hidden" id = "submitday2" name = "submitday2" value = <? echo $_POST['submitday2']; ?>>
 			<input type = "hidden" id = "submitagent" name = "submitagent" value = <? echo $_POST['submitagent']; ?>>
 			<input type = "hidden" id = "submititems2" name = "submititems2" value = <? echo $_POST['submititems2']; ?>>
+			<input type = "hidden" id = "newbatch" name = "newbatch" value = <? echo isset($_POST['newbatch']); ?>>
             <input type = "submit" value = "Confirm">
 		</form>
 		
@@ -62,5 +73,7 @@
 		</form>
 		
 	</body>
+	
+	<? include ("sitefoot.php"); ?>
 	
 </html>

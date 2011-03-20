@@ -2,8 +2,7 @@
 	<body>
 
 		<?php
-		$con = mysql_connect("localhost", "root", "") or die('Could not connect: ' . mysql_error());
-		mysql_select_db("distribution", $con);
+		include("managerhead.php");
 		$result = mysql_query("
 		
 		SELECT i.invoiceno as 'invoiceno',i.invoicedate as 'invoicedate', concat(s.agentlastname,', ',s.agentfirstname) as 'agentname', c.clientname as 'clientname', it.itemcode as 'itemcode', it.description as 'desc', ii.quantity as 'quant', it.srp as 'srp', d.amount as 'discount', (ii.quantity*it.srp*(100-d.amount)/100) as 'saleprice'

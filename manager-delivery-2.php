@@ -2,8 +2,7 @@
 	<body>
 
 		<?php
-		$con = mysql_connect("localhost", "root", "") or die('Could not connect: ' . mysql_error());
-		mysql_select_db("distribution", $con);
+		include("managerhead.php");
 		$result = mysql_query("
 		
 		SELECT d.deliveryid as 'deliveryid', d.deliverydate as 'deliverydate', d.deliverytime as 'deliverytime',

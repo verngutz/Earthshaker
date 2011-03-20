@@ -4,12 +4,13 @@
 	{
 		header('Location: index.php');
 	}
+	$error = false;
 	$result = mysql_query("INSERT INTO delivery (deliverydate, deliverytime, staffid, supplier) VALUES('"
 		. $_POST['submityear1'] . "-" . $_POST['submitmonth1'] . "-" . $_POST['submitday1'] . "', '" 
 		. $_POST['submithour1'] . ":" . $_POST['submitminute1'] . ":00', " 
 		. $_SESSION['userID'] .", '" 
-		. $_POST['submitsupplier'] ."')");
-	$delivery = mysql_fetch_array(mysql_query("SELECT * FROM delivery ORDER BY deliveryid DESC LIMIT 1"));
+		. $_POST['submitsupplier'] ."')") or $error = true;
+	$delivery = mysql_fetch_array(mysql_query("SELECT * FROM delivery ORDER BY deliveryid DESC LIMIT 1"))  or $error = true;
 	$deliid = $delivery['deliveryid'];
 	$itempieces = explode("$", $_POST['submititems1']);
 	for($i = 0; $i < count($itempieces) - 4; $i += 4)
@@ -18,10 +19,10 @@
 		. $deliid . ", "
 		. $itempieces[$i] . ", "
 		. $itempieces[$i + 2] . ", "
-		. $itempieces[$i + 3] . ")") or die(mysql_error());
+		. $itempieces[$i + 3] . ")")  or $error = true;
 	}
 
-	if($result)
+	if(!$error)
 	{
 		echo "<p>Action Succeeded.</p>";
 	}

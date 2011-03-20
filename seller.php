@@ -142,7 +142,6 @@
 					var rowCount = table.rows.length;
 					for(var i = 1; i < rowCount; i++) 
 					{
-						alert(i);
 						var row = table.rows[i];
 						var typenode = row.cells[1].childNodes[0];
 						var type = typenode.options[typenode.selectedIndex].text;
@@ -153,6 +152,7 @@
 						{
 							alert("Invalid quantity");
 							row.cells[2].childNodes[0].focus();
+							document.getElementById("submititems1").value = "";
 							return false;
 						}
 						else
@@ -170,6 +170,7 @@
 							{
 								alert("Requested quantity is larger than quantity in hand for item: " + type + ".");
 								row.cells[2].childNodes[0].focus();
+								document.getElementById("submititems1").value = "";
 								return false;
 							}
 							else
@@ -186,7 +187,7 @@
 									}
 								}
 								document.getElementById("submititems1").value += typenode.value +
-									"$" + type + "$" + cost.value + "$" + quantity.value + "$";
+									"$" + type + "$" + quantity.value + "$";
 							}
 						}
 					}
@@ -199,6 +200,48 @@
 			
 			function validateTransfer()
 			{
+				return true;
+			}
+			
+			function validateReturn()
+			{
+				var batchTable = document.getElementById("batchTable");
+				var batchTableRowCount = batchTable.rows.length;
+
+				var hasItems = false;
+				for(var i = 1; i < batchTableRowCount; i++)
+				{
+					hasItems = true;
+					var row = batchTable.rows[i];
+					var itemcode = row.cells[0].innerHTML;
+					var itemdesc = row.cells[1].innerHTML;
+					var quantity = row.cells[2].innerHTML;
+					document.getElementById("submititems3").value += itemcode + "$" + itemdesc + "$" + quantity + "$";
+					alert(itemcode);
+					alert(itemdesc);
+					alert(quantity);
+				}
+				if(!hasItems)
+				{
+					alert("No items to return");
+					document.getElementById("submititems1").value = "";
+					return false;
+				}
+				else
+				{
+					if(confirm("Are you sure you want to return your entire batch of items?"))
+					{
+						document.getElementById("submityear3").value = document.getElementById("yearchoice").value;
+						document.getElementById("submitmonth3").value = document.getElementById("monthchoice").value;
+						document.getElementById("submitday3").value = document.getElementById("daychoice").value;
+						return true;
+					}
+					else
+					{
+						document.getElementById("submititems3").value = "";
+						return false;
+					}
+				}
 			}
 			
 		</script>
@@ -227,8 +270,12 @@
 		<hr>
 		
 		<h3>Items in Hand</h3>
-			<form name = "return" onsubmit = "return validateReturn();">
-				<input type = "button" action = "processreturn.php" method = "post" value = "Return Current Batch"/>
+			<form name = "return" action = "processreturn.php" onsubmit = "return validateReturn();" method = "post">
+				<input type = "hidden" id = "submityear3" name = "submityear3"/>
+				<input type = "hidden" id = "submitmonth3" name = "submitmonth3"/>
+				<input type = "hidden" id = "submitday3" name = "submitday3"/>
+				<input type = "hidden" id = "submititems3" name = "submititems3"/>
+				<input type = "submit" value = "Return Current Batch"/>
 			</form>
 			<? getBatchFromDB($_SESSION['userID']); ?>
 		<hr>

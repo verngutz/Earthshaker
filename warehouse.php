@@ -191,6 +191,7 @@
 						{
 							alert("Cost field cannot be empty");
 							row.cells[2].childNodes[0].focus();
+							document.getElementById("submititems1").value = "";
 							return false;
 						}
 						else
@@ -199,6 +200,7 @@
 							{
 								alert("Invalid cost");
 								row.cells[2].childNodes[0].focus();
+								document.getElementById("submititems1").value = "";
 								return false;
 							}
 							else
@@ -207,6 +209,7 @@
 								{
 									alert("Invalid quantity");
 									row.cells[3].childNodes[0].focus();
+									document.getElementById("submititems1").value = "";
 									return false;
 								}
 								else
@@ -259,6 +262,7 @@
 						{
 							alert("Invalid quantity");
 							row.cells[3].childNodes[0].focus();
+							document.getElementById("submititems1").value = "";
 							return false;
 						}
 						else
@@ -268,6 +272,7 @@
 							{
 								alert("Requested Quanitity is larger than quantity available in warehouse.");
 								row.cells[3].childNodes[0].focus();
+								document.getElementById("submititems1").value = "";
 								return false;
 							}	
 							else
@@ -329,14 +334,14 @@
 		
 		<h3>Accept a New Delivery</h3>
 		<form name = "deli" onsubmit = "return validateDelivery();" action = "deliconfirm.php" method = "post">
-			<p>Delivered by: <input type = "text" id = "supplier" name = "supplier" value = "Supplier's Name"></p>
+			<p>Delivered by: <input type = "text" id = "supplier" name = "supplier" value = "Supplier Name"></p>
 			
 			<caption>Delivery Items</caption>
 			<table id = "deliveryTable">
 				<tr>
 					<th></th>
 					<th>Item Description</th>
-					<th>Cost</th>
+					<th>Cost Per Unit</th>
 					<th>Quantity</th>
 				</tr>
 				<tr>
@@ -365,7 +370,6 @@
 		<h3>Issue Items to Sales Agent</h3>
 		<form name = "issue" onsubmit = "return validateIssuance();" action = "issueconfirm.php" method = "post">
 			<p>Issue to Agent ID#: <input type = "text" id = "agent" name = "agent" onkeypress = "return numericOnly(event);"></p>
-			<p><input type = "checkbox" name = "newbatch"/>First time issuing to this sales agent this week?</p>
 			<caption>Batch Items</caption>
 			<table id = "batchTable">
 				<tr>

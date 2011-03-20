@@ -24,11 +24,13 @@
 			echo "<tr>";
 				echo "<th>Item ID</th>";
 				echo "<th>Item Description</th>";
-				echo "<th>Cost</th>";
+				echo "<th>Cost Per Unit</th>";
 				echo "<th>Quantity</th>";
+				echo "<th>Total Cost</th>";
 			echo "</tr>";
 			
 			$itempieces = explode("$", $_POST['submititems1']);
+			$grandtotal = 0;
 			for($i = 0; $i < count($itempieces) - 4; $i += 4)
 			{
 				echo "<tr>";
@@ -36,9 +38,13 @@
 					echo "<td>" . $itempieces[$i + 1] . "</td>";
 					echo "<td>" . $itempieces[$i + 2] . "</td>";
 					echo "<td>" . $itempieces[$i + 3] . "</td>";
+					$total = $itempieces[$i + 2] * $itempieces[$i + 3];
+					echo "<td>" . $total . "</td>";
+					$grandtotal += $total;
 				echo "</tr>";
 			}
 			echo "</table>";
+			echo "<p>Grand Total: " . $grandtotal . "</p>";
 		?>
 		
 		<form action = "processdeli.php" method = "post">

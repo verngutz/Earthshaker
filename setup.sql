@@ -81,7 +81,7 @@ CREATE TABLE issuance
 	staffid INT NOT NULL,
 	itemcode INT NOT NULL,
 	quantity INT NOT NULL,
-	CONSTRAINT issuance_pk PRIMARY KEY(batchno, issuedate),
+	CONSTRAINT issuance_pk PRIMARY KEY(batchno, issuedate, itemcode),
 	CONSTRAINT issuance_fk_batchno FOREIGN KEY(batchno) REFERENCES batch(batchno),
 	CONSTRAINT issuance_fk_agentid FOREIGN KEY(agentid) REFERENCES salesagent(agentid),
 	CONSTRAINT issuance_fk_staff FOREIGN KEY(staffid) REFERENCES staff(staffid),

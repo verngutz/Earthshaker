@@ -26,7 +26,7 @@
 			{
 				$deliveredquantity += $delirow['quantity'];
 			}
-			$calcissuedquantity = mysql_query("SELECT * FROM itemxbatch WHERE itemcode = " . $itemcode);
+			$calcissuedquantity = mysql_query("SELECT * FROM issuance WHERE itemcode = " . $itemcode);
 			$issuedquantity = 0;
 			while($issuerow = mysql_fetch_array($calcissuedquantity))
 			{
@@ -57,29 +57,46 @@
 		}
 		else
 		{
-			echo "<table id = 'batchTable'>";
-				echo "<tr>";
-					echo "<th>Item ID</th>";
-					echo "<th>Item Description</th>";
-					echo "<th>Quantity</th>";
-					echo "<th>SRP</th>";
-				echo "</tr>";
+			
+			$hasitem = false;
+			$table = "";
+			$table = $table . "<table id = 'batchTable'>"
+								. "<tr>"
+									. "<th>Item ID</th>"
+									. "<th>Item Description</th>"
+									. "<th>Quantity</th>"
+									. "<th>SRP</th>"
+								. "</tr>";
 			while($row = mysql_fetch_array($batch))
 			{
+				
 				$itemxbatchq = mysql_query("SELECT * FROM itemxbatch WHERE batchno = " . $row['batchno']);
 				while($itemxbatch = mysql_fetch_array($itemxbatchq))
 				{
 					$itemq = mysql_query("SELECT * FROM item WHERE itemcode = " . $itemxbatch['itemcode']);
 					$item = mysql_fetch_array($itemq);
-					echo "<tr>";
-						echo "<td>" . $itemxbatch['itemcode'] . "</td>";
-						echo "<td>" . $item['description'] . "</td>";
-						echo "<td>" . $itemxbatch['quantity'] . "</td>";
-						echo "<td>" . $item['srp'] . "</td>";
-					echo "</tr>";
+					if($itemxbatch['quantity'] > 0)
+					{
+						$hasitem = true;
+						$table = $table . "<tr>"
+											. "<td>" . $itemxbatch['itemcode'] . "</td>"
+											. "<td>" . $item['description'] . "</td>"
+											. "<td>" . $itemxbatch['quantity'] . "</td>"
+											. "<td>" . $item['srp'] . "</td>"
+										. "</tr>";
+					}
 				}
 			}
-			echo "</table>";
+			$table = $table . "</table>";
+			if(!$hasitem)
+			{
+				echo "<table id = 'batchTable'></table>";
+				echo "<p>No items in hand</p>";
+			}
+			else
+			{
+				echo $table;
+			}
 		}
 	}
 	

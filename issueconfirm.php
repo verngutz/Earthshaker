@@ -27,16 +27,6 @@
 			echo "<p>Date: " . $_POST['submityear2'] . "-" . $_POST['submitmonth2'] . "-" . $_POST['submitday2'] . "</p>";
 			echo "<p>Agent ID: " . $_POST['submitagent'] . "</p>";
 			echo "<p>Agent Name: " . $agent['agentfirstname'] . " " . $agent['agentlastname'] . "</p>";
-			echo "<p>Type of Action: ";
-			if(isset($_POST['newbatch']))
-			{
-				echo "New Batch";
-			}
-			else
-			{
-				echo "Adding to Already-held Batch";
-			}
-			echo "</p>";
 			if($agent['clientid'] != "")
 			{
 				$client = mysql_query("SELECT clientname FROM client WHERE clientid = '" . $agent['clientid'] . "'");
@@ -48,6 +38,7 @@
 				echo "<th>Item ID</th>";
 				echo "<th>Item Description</th>";
 				echo "<th>Quantity</th>";
+				echo "<th>SRP</th>";
 			echo "</tr>";
 			
 			$itempieces = explode("$", $_POST['submititems2']);
@@ -57,6 +48,8 @@
 					echo "<td>" . $itempieces[$i] . "</td>";
 					echo "<td>" . $itempieces[$i + 1] . "</td>";
 					echo "<td>" . $itempieces[$i + 2] . "</td>";
+					$srp = mysql_fetch_array(mysql_query("SELECT * FROM item WHERE itemcode = " . $itempieces[$i]));
+					echo "<td>" . $srp['srp'] . "</td>";
 				echo "</tr>";
 			}
 			echo "</table>"

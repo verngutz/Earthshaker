@@ -7,9 +7,11 @@
 		
 		$result = mysql_query("
 		
-		SELECT b.batchno as 'batchno', i.issuedate as 'batchdate', concat(s.agentlastname, ', ', s.agentfirstname) as 'agentname', c.clientname as 'clientname', concat(st.stafflastname,' ,',st.stafffirstname) as 'issuer', i.itemcode as 'itemcode', i.description as 'desc', ib.quantity as 'quant', i.srp as 'srp'
-		FROM batch b, salesagent s, client c, item i, itemxbatch ib, staff st, issuance is
-		WHERE b.agentid=s.agentid AND s.clientid=c.clientid AND ib.batchno=b.batchno AND i.itemcode=is.itemcode AND st.staffid=b.staffid AND b.batchno=is.batchno
+		SELECT b.batchno as 'batchno', iss.issuedate as 'batchdate', concat(s.agentlastname, ', ', s.agentfirstname) as 'agentname',
+		c.clientname as 'clientname', concat(st.stafflastname,' ,',st.stafffirstname) as 'issuer', i.itemcode as 'itemcode',
+		i.description as 'desc', iss.quantity as 'quant', i.srp as 'srp'
+		FROM batch b, salesagent s, client c, item i, staff st, issuance iss
+		WHERE b.batchno=iss.batchno AND s.agentid=iss.agentid AND c.clientid=s.clientid AND i.itemcode=iss.itemcode AND st.staffid=iss.staffid
 		ORDER BY b.batchno
 		
 		");

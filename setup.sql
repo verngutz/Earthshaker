@@ -170,3 +170,5 @@ LOAD DATA LOCAL INFILE "C:/es/itemsmall" INTO TABLE item(description, srp);
 LOAD DATA LOCAL INFILE "C:/es/staff" INTO TABLE staff(stafflastname, stafffirstname);
 LOAD DATA LOCAL INFILE "C:/es/discountsmall" INTO TABLE discount(clientid, itemcode, amount);
 
+
+

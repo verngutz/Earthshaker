@@ -10,3 +10,4 @@ Limitations:
 2. There is no way to update the system in case items are lost, destroyed, or stolen.
 3. Supplier's Names can't have apostrophes.
 4. The system doesn't check if a sales agent already has a batch in hand upon issuance of new items.
+5. Client discounts cannot be changed.

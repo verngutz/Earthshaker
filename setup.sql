@@ -61,18 +61,6 @@ CREATE TABLE batch
 	CONSTRAINT batch_fk_agent FOREIGN KEY(agentid) REFERENCES salesagent(agentid)
 );
 
-CREATE TABLE issuance
-(
-	batchno INT NOT NULL,
-	issuedate DATE NOT NULL,
-	agentid INT NOT NULL,
-	staffid INT NOT NULL,
-	CONSTRAINT issuance_pk PRIMARY KEY(batchno, issuedate, staffid),
-	CONSTRAINT issuance_fk_batchno FOREIGN KEY(batchno) REFERENCES batch(batchno),
-	CONSTRAINT issuance_fk_agentid FOREIGN KEY(agentid) REFERENCES salesagent(agentid),
-	CONSTRAINT issuance_fk_staff FOREIGN KEY(staffid) REFERENCES staff(staffid)
-);
-
 ALTER TABLE batch AUTO_INCREMENT = 60000000;
 
 CREATE TABLE item
@@ -84,6 +72,21 @@ CREATE TABLE item
 );
 
 ALTER TABLE item AUTO_INCREMENT = 70000000;
+
+CREATE TABLE issuance
+(
+	batchno INT NOT NULL,
+	issuedate DATE NOT NULL,
+	agentid INT NOT NULL,
+	staffid INT NOT NULL,
+	itemcode INT NOT NULL,
+	quantity INT NOT NULL,
+	CONSTRAINT issuance_pk PRIMARY KEY(batchno, issuedate),
+	CONSTRAINT issuance_fk_batchno FOREIGN KEY(batchno) REFERENCES batch(batchno),
+	CONSTRAINT issuance_fk_agentid FOREIGN KEY(agentid) REFERENCES salesagent(agentid),
+	CONSTRAINT issuance_fk_staff FOREIGN KEY(staffid) REFERENCES staff(staffid),
+	CONSTRAINT issuance_fk_itemcode FOREIGN KEY(itemcode) REFERENCES item(itemcode)
+);
 
 CREATE TABLE discount
 (

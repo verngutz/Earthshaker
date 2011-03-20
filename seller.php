@@ -142,6 +142,7 @@
 					var rowCount = table.rows.length;
 					for(var i = 1; i < rowCount; i++) 
 					{
+						alert(i);
 						var row = table.rows[i];
 						var typenode = row.cells[1].childNodes[0];
 						var type = typenode.options[typenode.selectedIndex].text;
@@ -184,9 +185,9 @@
 										return false;
 									}
 								}
+								document.getElementById("submititems1").value += typenode.value +
+									"$" + type + "$" + cost.value + "$" + quantity.value + "$";
 							}
-							document.getElementById("submititems1").value += type.value +
-								"$" + type.options[type.selectedIndex].text + "$" + cost.value + "$" + quantity.value + "$";
 						}
 					}
 					document.getElementById("submityear1").value = document.getElementById("yearchoice").value;
@@ -226,6 +227,9 @@
 		<hr>
 		
 		<h3>Items in Hand</h3>
+			<form name = "return" onsubmit = "return validateReturn();">
+				<input type = "button" action = "processreturn.php" method = "post" value = "Return Current Batch"/>
+			</form>
 			<? getBatchFromDB($_SESSION['userID']); ?>
 		<hr>
 		

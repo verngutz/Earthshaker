@@ -1,6 +1,6 @@
 <?
 	include('sellerhead.php');
-	if(!isset($_POST['submititems1'])
+	if(!isset($_POST['submititems1']))
 	{
 		header('Location: index.php');
 	}
@@ -15,21 +15,17 @@
 	<body>
 	
 		<h2>Invoice Confirmation</h2>
-	
+
 		<?
+			echo "<p>" . $_POST['submititems1'] . "</p>";
 			$id = $_SESSION['userID'];
-			$agent = mysql_fetch_array(mysql_query("SELECT * FROM  salesagent WHERE agentid = '" . $id . "'"));
-			echo "<p>Date: " . $_POST['submityear2'] . "-" . $_POST['submitmonth2'] . "-" . $_POST['submitday2'] . "</p>";
-			echo "<p>Agent ID: " . $agent['agentid'] . "</p>";
-			echo "<p>Agent Name: " . $agent['agentfirstname'] . " " . $agent['agentlastname'] . "</p>";
-			echo "<p>Type of Action: ";
-			echo "</p>";
-			if($agent['clientid'] != "")
-			{
-				$client = mysql_query("SELECT clientname FROM client WHERE clientid = '" . $agent['clientid'] . "'");
-				$clientname = mysql_fetch_array($client);
-				echo "<p>Client: " . $clientname['clientname'];
-			}
+			echo "<p>Date: " . $_POST['submityear1'] . "-" . $_POST['submitmonth1'] . "-" . $_POST['submitday1'] . "</p>";
+
+			$client = mysql_fetch_array(mysql_query("SELECT * FROM client JOIN salesagent ON client.clientid = salesagent.clientid
+				WHERE agentid = " . $id . ""));
+			
+			echo "<p>Client: " . $client['clientname'] . "</p>";
+				
 			echo "<table>";
 			echo "<tr>";
 				echo "<th>Item ID</th>";
@@ -37,7 +33,7 @@
 				echo "<th>Quantity</th>";
 			echo "</tr>";
 			
-			$itempieces = explode("$", $_POST['submititems2']);
+			$itempieces = explode("$", $_POST['submititems1']);
 			for($i = 0; $i < count($itempieces) - 3; $i += 3)
 			{
 				echo "<tr>";
@@ -49,17 +45,15 @@
 			echo "</table>"
 		?>
 		
-		<form action = "processissue.php" method = "post">
-			<input type = "hidden" id = "submityear2" name = "submityear2" value = <? echo $_POST['submityear2']; ?>>
-			<input type = "hidden" id = "submitmonth2" name = "submitmonth2" value = <? echo $_POST['submitmonth2']; ?>>
-			<input type = "hidden" id = "submitday2" name = "submitday2" value = <? echo $_POST['submitday2']; ?>>
-			<input type = "hidden" id = "submitagent" name = "submitagent" value = <? echo $_POST['submitagent']; ?>>
-			<input type = "hidden" id = "submititems2" name = "submititems2" value = <? echo $_POST['submititems2']; ?>>
-			<input type = "hidden" id = "newbatch" name = "newbatch" value = <? echo isset($_POST['newbatch']); ?>>
+		<form action = "processinvoice.php" method = "post">
+			<input type = "hidden" id = "submityear1" name = "submityear1" value = "<? echo $_POST['submityear2']; ?>">
+			<input type = "hidden" id = "submitmonth1" name = "submitmonth1" value = "<? echo $_POST['submitmonth2']; ?>">
+			<input type = "hidden" id = "submitday1" name = "submitday1" value = "<? echo $_POST['submitday2']; ?>">
+			<input type = "hidden" id = "submititems1" name = "submititems1" value = "<? echo $_POST['submititems2']; ?>">
             <input type = "submit" value = "Confirm">
 		</form>
 		
-		<form action = "warehouse.php" method = "post">
+		<form action = "seller.php" method = "post">
             <input type = "submit" value = "Cancel">
 		</form>
 		

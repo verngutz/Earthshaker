@@ -9,3 +9,4 @@ Limitations:
 1. Items are not classified into time pieces, digital cameras and accessories, mobile phones, and small appliances.
 2. There is no way to update the system in case items are lost, destroyed, or stolen.
 3. Supplier's Names can't have apostrophes.
+4. The system doesn't check if a sales agent already has a batch in hand upon issuance of new items.

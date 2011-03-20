@@ -9,14 +9,16 @@
 		. $_POST['submithour1'] . ":" . $_POST['submitminute1'] . ":00', " 
 		. $_SESSION['userID'] .", '" 
 		. $_POST['submitsupplier'] ."')");
-		
+	$delivery = mysql_fetch_array(mysql_query("SELECT * FROM delivery ORDER BY deliveryid DESC LIMIT 1"));
+	$deliid = $delivery['deliveryid'];
 	$itempieces = explode("$", $_POST['submititems1']);
 	for($i = 0; $i < count($itempieces) - 4; $i += 4)
 	{
-		mysql_query("INSERT INTO deliveryxitem (itemcode, cost, quantity) VALUES('"
+		mysql_query("INSERT INTO deliveryxitem (deliveryid, itemcode, cost, quantity) VALUES("
+		. $deliid . ", "
 		. $itempieces[$i] . ", "
 		. $itempieces[$i + 2] . ", "
-		. $itempieces[$i + 3] . ")");
+		. $itempieces[$i + 3] . ")") or die(mysql_error());
 	}
 
 	if($result)

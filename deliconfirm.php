@@ -1,5 +1,9 @@
 <?
 	include ('warehousehead.php');
+	if(!isset($_POST['submitsupplier']))
+	{
+		header('Location: index.php');
+	}
 ?>
 
 <html>
@@ -34,17 +38,17 @@
 					echo "<td>" . $itempieces[$i + 3] . "</td>";
 				echo "</tr>";
 			}
-			echo "</table>"
+			echo "</table>";
 		?>
 		
 		<form action = "processdeli.php" method = "post">
-			<input type = "hidden" id = "submityear1" name = "submityear1" value = <? echo $_POST['submityear1']; ?>>
-			<input type = "hidden" id = "submitmonth1" name = "submitmonth1" value = <? echo $_POST['submitmonth1']; ?>>
-			<input type = "hidden" id = "submitday1" name = "submitday1" value = <? echo $_POST['submitday1']; ?>>
-			<input type = "hidden" id = "submithour1" name = "submithour1" value = <? echo $_POST['submithour1']; ?>>
-			<input type = "hidden" id = "submitminute1" name = "submitminute1" value = <? echo $_POST['submitminute1']; ?>>
-			<input type = "hidden" id = "submitsupplier" name = "submitsupplier" value = <? echo $_POST['submitsupplier']; ?>>
-			<input type = "hidden" id = "submititems1" name = "submititems1" value = <? echo $_POST['submititems1']; ?>>
+			<input type = "hidden" id = "submityear1" name = "submityear1" value = "<? echo $_POST['submityear1']; ?>">
+			<input type = "hidden" id = "submitmonth1" name = "submitmonth1" value = "<? echo $_POST['submitmonth1']; ?>">
+			<input type = "hidden" id = "submitday1" name = "submitday1" value = "<? echo $_POST['submitday1']; ?>">
+			<input type = "hidden" id = "submithour1" name = "submithour1" value = "<? echo $_POST['submithour1']; ?>">
+			<input type = "hidden" id = "submitminute1" name = "submitminute1" value = "<? echo $_POST['submitminute1']; ?>">
+			<input type = "hidden" id = "submitsupplier" name = "submitsupplier" value = "<? echo $_POST['submitsupplier']; ?>">
+			<input type = "hidden" id = "submititems1" name = "submititems1" value = "<? echo $_POST['submititems1']; ?>">
             <input type = "submit" value = "Confirm">
 		</form>
 		

@@ -8,12 +8,11 @@
 	
 	if($_POST['newbatch'])
 	{
-		mysql_query("INSERT INTO batch (agentid) VALUES ('" . $_POST['submitagent'] . ")");
+		mysql_query("INSERT INTO batch (agentid) VALUES (" . $_POST['submitagent'] . ")") or $error = true;
 	}
 	
 	$batch = mysql_fetch_array(mysql_query("SELECT * FROM batch ORDER BY batchno DESC LIMIT 1"));
 	$batchno = $batch['batchno'];
-	
 	mysql_query("INSERT INTO issuance (batchno, issuedate, agentid, staffid) VALUES("
 		. $batchno . ", '"
 		. $_POST['submityear2'] . "-" . $_POST['submitmonth2'] . "-" . $_POST['submitday2'] . "', " 
@@ -21,15 +20,13 @@
 		. $_SESSION['userID'] . ")") or $error = true;
 
 	$itempieces = explode("$", $_POST['submititems2']);
-	for($i = 0; $i < count($itempieces) - 4; $i += 4)
+	for($i = 0; $i < count($itempieces) - 3; $i += 3)
 	{
-		mysql_query("INSERT INTO itemxbatch (itemcode, batchno, quantity) VALUES('"
+		mysql_query("INSERT INTO itemxbatch (itemcode, batchno, quantity) VALUES("
 			. $itempieces[$i] . ", "
 			. $batchno . ", "
-			. $itempieces[$i + 2] . ") ON DUPLICATE KEY UPDATE itemxbatch SET quantity += "
-			. $itempieces[$i + 2] . "WHERE itemcode = "
-			. $itempieces[$i] . "AND batchno = "
-			. $batchno) or $error = true;;
+			. $itempieces[$i + 2] . ") ON DUPLICATE KEY UPDATE quantity = quantity + "
+			. $itempieces[$i + 2]);
 	}
 	
 	if(!$error)

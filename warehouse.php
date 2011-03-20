@@ -5,7 +5,7 @@
 <html>
 
 	<head>
-		<title></title>
+		<title>Project Distribution for Warehouse Staff</title>
 		<script type = "text/javascript" src = "dynamictable.jsm"></script>
 		<script type = "text/javascript" src = "numericOnly.jsm"></script>
 		<script type = "text/javascript">

@@ -4,6 +4,7 @@
 	{
 		header('Location: index.php');
 	}
+	echo "<html><head><title>Action Results</title></head><body>";
 	$error = false;
 	$result = mysql_query("INSERT INTO invoice (invoicedate, agentid) VALUES('"
 		. $_POST['submityear1'] . "-" . $_POST['submitmonth1'] . "-" . $_POST['submitday1'] . "', "
@@ -24,7 +25,7 @@
 			. $itempieces[$i + 2] . " WHERE itemcode = "
 			. $itempieces[$i] . " AND batchno = " . $batch['batchno']);
 	}
-	mysql_query("DELETE FROM batch WHERE quantity = 0");
+	mysql_query("DELETE FROM itemxbatch WHERE quantity = 0");
 
 	if(!$error)
 	{
@@ -36,4 +37,7 @@
 		echo "<p>Reported error: " . mysql_error() . "</p>";
 	}
 	echo "<a href = 'seller.php'>Return to Main Page</a>";
+	echo "</body>";
+	include('sitefoot.php');
+	echo "</html>";
 ?>

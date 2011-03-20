@@ -4,6 +4,7 @@
 	{
 		header('Location: index.php');
 	}
+	echo "<html><head><title>Action Results</title></head><body>";
 	$error = false;
 	$result = mysql_query("INSERT INTO delivery (deliverydate, deliverytime, staffid, supplier) VALUES('"
 		. $_POST['submityear1'] . "-" . $_POST['submitmonth1'] . "-" . $_POST['submitday1'] . "', '" 
@@ -32,4 +33,7 @@
 		echo "<p>Reported error: " . mysql_error() . "</p>";
 	}
 	echo "<a href = 'warehouse.php'>Return to Main Page</a>";
+	echo "</body>";
+	include('sitefoot.php');
+	echo "</html>";
 ?>

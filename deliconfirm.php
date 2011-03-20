@@ -9,7 +9,7 @@
 <html>
 
 	<head>
-		<title></title>
+		<title>Confirm Delivery</title>
 	</head>
 	
 	<body>

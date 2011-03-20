@@ -4,6 +4,8 @@
 	{
 		header('Location: index.php');
 	}
+	
+	echo "<html><head><title>Action Results</title></head><body>";
 	$error = false;
 	$batch = mysql_fetch_array(mysql_query("SELECT * FROM batch WHERE agentid = " 
 		. $_SESSION['userID'] . " ORDER BY batchno DESC LIMIT 1")) or $error = true;
@@ -22,4 +24,8 @@
 		echo "<p>Reported error: " . mysql_error() . "</p>";
 	}
 	echo "<a href = 'seller.php'>Return to Main Page</a>";
+	echo "<a href = 'warehouse.php'>Return to Main Page</a>";
+	echo "</body>";
+	include('sitefoot.php');
+	echo "</html>";
 ?>

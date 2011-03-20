@@ -5,7 +5,7 @@
 <html>
 
 	<head>
-    	<title></title>
+    	<title>Project Distribution for Sales Agents</title>
         <script type = "text/javascript" src = "dynamictable.jsm"></script>
         <script type = "text/javascript" src = "numericOnly.jsm"></script>
         <script type = "text/javascript">
@@ -130,7 +130,7 @@
 			{
 				if(document.getElementById("client").innerHTML == "None")
 				{
-					alert("No client to sell items to");
+					alert("No client to sell items to.");
 					return false;
 				}
 				else
@@ -200,7 +200,76 @@
 			
 			function validateTransfer()
 			{
-				return true;
+				if(document.getElementById("destagent").value == "")
+				{
+					alert("Agent ID# field cannot be empty.");
+					document.getElementById("destagent").focus();
+					return false;
+				}
+				else
+				{
+					document.getElementById("submitagent").value = document.getElementById("destagent").value;
+					var batchTable = document.getElementById("batchTable");
+					var batchTableRowCount = batchTable.rows.length;
+					
+					var table = document.getElementById("transferTable");
+					var rowCount = table.rows.length;
+					for(var i = 1; i < rowCount; i++) 
+					{
+						var row = table.rows[i];
+						var typenode = row.cells[1].childNodes[0];
+						var type = typenode.options[typenode.selectedIndex].text;
+						var quantity = row.cells[2].childNodes[0];
+						
+						
+						if(quantity.value == "" || quantity.value == "0")
+						{
+							alert("Invalid quantity");
+							row.cells[2].childNodes[0].focus();
+							document.getElementById("submititems2").value = "";
+							return false;
+						}
+						else
+						{
+							var quantityavailable = 0;
+							for(var j = 0; j < batchTableRowCount; j++)
+							{
+								if(batchTable.rows[j].cells[0].innerHTML == typenode.value)
+								{
+									quantityavailable = parseInt(batchTable.rows[j].cells[2].innerHTML);
+									break;
+								}
+							}
+							if (parseInt(quantity.value) > quantityavailable)
+							{
+								alert("Requested quantity is larger than quantity in hand for item: " + type + ".");
+								row.cells[2].childNodes[0].focus();
+								document.getElementById("submititems2").value = "";
+								return false;
+							}
+							else
+							{
+								for(var k = i + 1; k < rowCount; k++)
+								{
+									othertype = table.rows[k].cells[1].childNodes[0];
+									if(typenode.value == othertype.value)
+									{
+										alert("Each row must be occupied by a unique item type.");
+										table.rows[k].cells[1].childNodes[0].focus();
+										document.getElementById("submititems2").value = "";
+										return false;
+									}
+								}
+								document.getElementById("submititems2").value += typenode.value +
+									"$" + type + "$" + quantity.value + "$";
+							}
+						}
+					}
+					document.getElementById("submityear2").value = document.getElementById("yearchoice").value;
+					document.getElementById("submitmonth2").value = document.getElementById("monthchoice").value;
+					document.getElementById("submitday2").value = document.getElementById("daychoice").value;
+					return true;
+				}
 			}
 			
 			function validateReturn()
@@ -217,9 +286,6 @@
 					var itemdesc = row.cells[1].innerHTML;
 					var quantity = row.cells[2].innerHTML;
 					document.getElementById("submititems3").value += itemcode + "$" + itemdesc + "$" + quantity + "$";
-					alert(itemcode);
-					alert(itemdesc);
-					alert(quantity);
 				}
 				if(!hasItems)
 				{
@@ -309,8 +375,8 @@
 		<hr>
 		
         <h3>Transfer Items</h3>
-        <form name = "tran" action = "redirect.php" method = "post" onsubmit = "return validateTransfer();">
-        	<p>Transfer to Sales Agent with ID#: <input type = "text" name "destagent"></p>
+        <form name = "tran" action = "transferconfirm.php" method = "post" onsubmit = "return validateTransfer();">
+        	<p>Transfer to Agent ID#: <input type = "text" id = "destagent" name "destagent" onkeypress = "return numericOnly(event);"></p>
             
             <caption>Items to Transfer</caption>
             <table id = "transferTable">
@@ -332,6 +398,7 @@
 			<input type = "hidden" id = "submitmonth2" name = "submitmonth2"/>
 			<input type = "hidden" id = "submitday2" name = "submitday2"/>
 			<input type = "hidden" id = "submititems2" name = "submititems2"/>
+			<input type = "hidden" id = "submitagent" name = "submitagent"/>
 			<br>
             <input type = "submit" value = "Accept Transfer">
         </form>

@@ -5,7 +5,7 @@
 <html>
 
 	<head>
-		<title>Manager's View</title>
+		<title>Project Distribution for Managers</title>
 		<script type="text/javascript">
 		
 			function redirect(form, name)

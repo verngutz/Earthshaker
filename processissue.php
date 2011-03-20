@@ -4,6 +4,8 @@
 	{
 		header('Location: index.php');
 	}
+	
+	echo "<html><head><title>Action Results</title></head><body>";
 	$error = false;
 	
 	if(mysql_num_rows(mysql_query("SELECT * FROM batch WHERE agentid = " . $_POST['submitagent'])) == 0)
@@ -44,4 +46,7 @@
 		echo "<p>Reported error: " . mysql_error() . "</p>";
 	}
 	echo "<a href = 'warehouse.php'>Return to Main Page</a>";
+	echo "</body>";
+	include('sitefoot.php');
+	echo "</html>";
 ?>

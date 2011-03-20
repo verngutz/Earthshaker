@@ -14,3 +14,5 @@ Limitations:
 6. The system doesn't automatically synchronize over the network (pages need are only updated upon loading).
 7. Item issuances to the same sales agent on the same day will be tracked as a single issuance even if they are done at different times.
 8. Sales agents can't be reassigned to new clients or information about all of the previous transactions between the sales agent to be reassigned and his old client will be corrupted.
+9. Records can't be deleted using the GUI.
+10. New items, clients, agents, discounts, and warehouse staff can't be added using the GUI.

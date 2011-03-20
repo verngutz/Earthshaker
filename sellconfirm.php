@@ -9,7 +9,7 @@
 <html>
 
 	<head>
-		<title></title>
+		<title>Confirm Invoice</title>
 	</head>
 	
 	<body>
@@ -23,7 +23,6 @@
 			$client = mysql_fetch_array(mysql_query("SELECT * FROM client JOIN salesagent ON client.clientid = salesagent.clientid
 				WHERE agentid = " . $id));
 			
-			echo "<p>" . $client['clientid'] . "</p>";
 			echo "<p>Client: " . $client['clientname'] . "</p>";
 				
 			echo "<table>";

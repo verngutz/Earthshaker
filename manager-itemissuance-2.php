@@ -2,15 +2,14 @@
 	<body>
 
 		<?php
-		$con = mysql_connect("localhost", "root", "") or die('Could not connect: ' . mysql_error());
-		mysql_select_db("distribution", $con);
+		include("managerhead.php");
 		
 		
 		$result = mysql_query("
 		
-		SELECT b.batchno as 'batchno', b.batchdate as 'batchdate', concat(s.agentlastname, ', ', s.agentfirstname) as 'agentname', c.clientname as 'clientname', concat(st.stafflastname,' ,',st.stafffirstname) as 'issuer', i.itemcode as 'itemcode', i.description as 'desc', ib.quantity as 'quant', i.srp as 'srp'
-		FROM batch b, salesagent s, client c, item i, itemxbatch ib, staff st
-		WHERE b.agentid=s.agentid AND s.clientid=c.clientid AND ib.batchno=b.batchno AND i.itemcode=ib.itemcode AND st.staffid=b.staffid
+		SELECT b.batchno as 'batchno', i.issuedate as 'batchdate', concat(s.agentlastname, ', ', s.agentfirstname) as 'agentname', c.clientname as 'clientname', concat(st.stafflastname,' ,',st.stafffirstname) as 'issuer', i.itemcode as 'itemcode', i.description as 'desc', ib.quantity as 'quant', i.srp as 'srp'
+		FROM batch b, salesagent s, client c, item i, itemxbatch ib, staff st, issuance is
+		WHERE b.agentid=s.agentid AND s.clientid=c.clientid AND ib.batchno=b.batchno AND i.itemcode=is.itemcode AND st.staffid=b.staffid AND b.batchno=is.batchno
 		ORDER BY b.batchno
 		
 		");

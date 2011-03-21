@@ -166,9 +166,9 @@ ALTER TABLE manager AUTO_INCREMENT = 90000000;
 LOAD DATA LOCAL INFILE "C:/es/client" INTO TABLE client(clientname);
 LOAD DATA LOCAL INFILE "C:/es/manager" INTO TABLE manager(managerlastname, managerfirstname);
 LOAD DATA LOCAL INFILE "C:/es/salesagent" INTO TABLE salesagent(agentlastname, agentfirstname, clientid);
-LOAD DATA LOCAL INFILE "C:/es/itemsmall" INTO TABLE item(description, srp);
+LOAD DATA LOCAL INFILE "C:/es/item" INTO TABLE item(description, srp);
 LOAD DATA LOCAL INFILE "C:/es/staff" INTO TABLE staff(stafflastname, stafffirstname);
-LOAD DATA LOCAL INFILE "C:/es/discountsmall" INTO TABLE discount(clientid, itemcode, amount);
+LOAD DATA LOCAL INFILE "C:/es/discount" INTO TABLE discount(clientid, itemcode, amount);
 
 
 

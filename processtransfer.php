@@ -35,8 +35,7 @@
 			. $itempieces[$i] . ", "
 			. $destbatch['batchno'] . ", "
 			. $itempieces[$i + 2] . ") ON DUPLICATE KEY UPDATE quantity = quantity + " 
-			. $itempieces[$i + 2] . " WHERE itemcode = "
-			. $itempieces[$i] . " AND batchno = " . $destbatch['batchno']) or die(mysql_error());
+			. $itempieces[$i + 2]) or die(mysql_error());
 	}
 	mysql_query("DELETE FROM itemxbatch WHERE quantity = 0");
 	

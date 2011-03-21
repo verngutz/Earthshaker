@@ -5,7 +5,7 @@
 <html>
 
 	<head>
-		<title></title>
+		<title>Project Distribution for Warehouse Staff</title>
 		<script type = "text/javascript" src = "dynamictable.jsm"></script>
 		<script type = "text/javascript" src = "numericOnly.jsm"></script>
 		<script type = "text/javascript">
@@ -191,24 +191,46 @@
 						{
 							alert("Cost field cannot be empty");
 							row.cells[2].childNodes[0].focus();
+							document.getElementById("submititems1").value = "";
 							return false;
 						}
 						else
-						{
-							if(quantity.value == "" || quantity.value == "0")
+						{						
+							if(isNaN(cost.value) || parseFloat(cost.value) * 100 != parseInt(parseFloat(cost.value) * 100))
 							{
-								alert("Invalid quantity");
-								row.cells[3].childNodes[0].focus();
+								alert("Invalid cost");
+								row.cells[2].childNodes[0].focus();
+								document.getElementById("submititems1").value = "";
 								return false;
 							}
 							else
 							{
-								document.getElementById("submititems1").value += type.value +
-									"$" + type.options[type.selectedIndex].text + "$" + cost.value + "$" + quantity.value + "$";
+								if(quantity.value == "" || quantity.value == "0")
+								{
+									alert("Invalid quantity");
+									row.cells[3].childNodes[0].focus();
+									document.getElementById("submititems1").value = "";
+									return false;
+								}
+								else
+								{
+									for(var j = i + 1; j < rowCount; j++)
+									{
+										othertype = table.rows[j].cells[1].childNodes[0];
+										if(type.value == othertype.value)
+										{
+											alert("Each row must be occupied by a unique item type.");
+											table.rows[j].cells[1].childNodes[0].focus();
+											document.getElementById("submititems1").value = "";
+											return false;
+										}
+									}
+									document.getElementById("submititems1").value += type.value +
+										"$" + type.options[type.selectedIndex].text + "$" + cost.value + "$" + quantity.value + "$";
+								}
 							}
 						}
 					}
-					
 					document.getElementById("submityear1").value = document.getElementById("yearchoice").value;
 					document.getElementById("submitmonth1").value = document.getElementById("monthchoice").value;
 					document.getElementById("submitday1").value = document.getElementById("daychoice").value;
@@ -235,17 +257,40 @@
 					{
 						var row = table.rows[i];
 						var type = row.cells[1].childNodes[0];
-						var quantity = row.cells[2].childNodes[0];
+						var quantity = row.cells[3].childNodes[0];
 						if(quantity.value == "" || quantity.value == "0")
 						{
 							alert("Invalid quantity");
-							row.cells[2].childNodes[0].focus();
+							row.cells[3].childNodes[0].focus();
+							document.getElementById("submititems1").value = "";
 							return false;
 						}
 						else
 						{
-							document.getElementById("submititems2").value += type.value +
-								"$" + type.options[type.selectedIndex].text + "$" + quantity.value + "$";
+							var availablequantity = row.cells[2].childNodes[0];
+							if(parseInt(quantity.value) > parseInt(availablequantity.options[availablequantity.selectedIndex].text))
+							{
+								alert("Requested Quanitity is larger than quantity available in warehouse.");
+								row.cells[3].childNodes[0].focus();
+								document.getElementById("submititems1").value = "";
+								return false;
+							}	
+							else
+							{
+								for(var j = i + 1; j < rowCount; j++)
+								{
+									othertype = table.rows[j].cells[1].childNodes[0];
+									if(type.value == othertype.value)
+									{
+										alert("Each row must be occupied by a unique item type.");
+										table.rows[j].cells[1].childNodes[0].focus();
+										document.getElementById("submititems2").value = "";
+										return false;
+									}
+								}
+								document.getElementById("submititems2").value += type.value +
+									"$" + type.options[type.selectedIndex].text + "$" + quantity.value + "$";
+							}
 						}
 					}
 					document.getElementById("submityear2").value = document.getElementById("yearchoice").value;
@@ -254,7 +299,13 @@
 					return true;
 				}
 			}
-				
+			
+			
+			function updateQuantity(type)
+			{
+				type.parentNode.parentNode.cells[2].childNodes[0].selectedIndex = type.selectedIndex;
+			}
+			
 		</script>
 		
 	</head>
@@ -283,20 +334,20 @@
 		
 		<h3>Accept a New Delivery</h3>
 		<form name = "deli" onsubmit = "return validateDelivery();" action = "deliconfirm.php" method = "post">
-			<p>Delivered by: <input type = "text" id = "supplier" name = "supplier" value = "Supplier's Name"></p>
+			<p>Delivered by: <input type = "text" id = "supplier" name = "supplier" value = "Supplier Name"></p>
 			
 			<caption>Delivery Items</caption>
 			<table id = "deliveryTable">
 				<tr>
 					<th></th>
 					<th>Item Description</th>
-					<th>Cost</th>
+					<th>Cost Per Unit</th>
 					<th>Quantity</th>
 				</tr>
 				<tr>
 					<td><input type = "checkbox" name = "checkbox"/></td>
 					<td><select name= "itemType"><? getItemsFromDB(); ?></select></td>
-					<td><input type = "text" name = "cost" onkeypress = "return numericOnly(event);"/></td>
+					<td><input type = "text" name = "cost"/></td>
 					<td><input type = "text" name = "quantity" onkeypress = "return numericOnly(event);"/></td>
 				</tr>
 			</table>
@@ -319,17 +370,18 @@
 		<h3>Issue Items to Sales Agent</h3>
 		<form name = "issue" onsubmit = "return validateIssuance();" action = "issueconfirm.php" method = "post">
 			<p>Issue to Agent ID#: <input type = "text" id = "agent" name = "agent" onkeypress = "return numericOnly(event);"></p>
-			<p><input type = "checkbox" name = "newbatch"/>First time issuing to this sales agent this week?</p>
 			<caption>Batch Items</caption>
 			<table id = "batchTable">
 				<tr>
 					<th></th>
 					<th>Item Description</th>
-					<th>Quantity</th>
+					<th>Available Quantity</th>
+					<th>Quantity to Issue</th>
 				</tr>
 				<tr>
 					<td><input type = "checkbox" name = "checkbox"/></td>
-					<td><select name= "itemType"><? getItemsFromDB(); ?></select></td>
+					<td><select name = "itemType" onchange = "updateQuantity(this)"><? getItemsFromDB(); ?></select></td>
+					<td><select name = "availablequantity" disabled = "true"><? getWarehouseQuantity(); ?></select></td>
 					<td><input type = "text" name = "quantity" onkeypress = "return numericOnly(event);"/></td>
 				</tr>
 			</table>

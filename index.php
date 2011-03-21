@@ -53,7 +53,7 @@
 <html>
 
 	<head>
-		<title></title>
+		<title>Project Distribution Home Page</title>
 		<script type = "text/javascript" src = "numericOnly.jsm"></script>
 	</head>
 

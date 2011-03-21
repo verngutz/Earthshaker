@@ -2,8 +2,7 @@
 	<body>
 
 		<?php
-		$con = mysql_connect("localhost", "root", "") or die('Could not connect: ' . mysql_error());
-		mysql_select_db("distribution", $con);
+		include("managerhead.php");
 		$result = mysql_query("
 		
 		SELECT t.transferno as 'transferno', t.transferdate as 'transferdate', t.sourcebatch as 'sourcebatch',

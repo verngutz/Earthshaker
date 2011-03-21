@@ -33,7 +33,4 @@
 		echo "<p>Reported error: " . mysql_error() . "</p>";
 	}
 	echo "<a href = 'warehouse.php'>Return to Main Page</a>";
-	echo "</body>";
-	include('sitefoot.php');
-	echo "</html>";
 ?>

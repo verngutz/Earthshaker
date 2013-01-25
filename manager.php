@@ -21,7 +21,7 @@
 	</head>
 
 	<body>
-		<form name = "userview" action = "#" method = "POST" onsubmit = "usePage(this, 'group1');"/>
+		<form name = "userview" action = "#" method = "POST" onsubmit = "redirect(this, 'group1');"/>
 			<h2>What report would you like to generate?</h2>
 			<input type = "radio" name = "group1" value = "manager-delivery-2.php" checked = "true"/>Delivery Receipt<br>
 			<input type = "radio" name = "group1" value = "manager-invoice-2.php"/>Sales Invoice<br>

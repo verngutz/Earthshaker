@@ -37,7 +37,7 @@ CREATE TABLE salesagent
 	agentfirstname VARCHAR(20) NOT NULL,
 	clientid INT,
 	CONSTRAINT agent_pk PRIMARY KEY(agentid), 
-	CONSTRAINT agent_fk_client FOREIGN KEY(clientid) REFERENCES client(clientid),
+	CONSTRAINT agent_fk_client FOREIGN KEY(clientid) REFERENCES client(clientid)
 );
 
 ALTER TABLE salesagent AUTO_INCREMENT = 40000000;

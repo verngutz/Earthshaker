@@ -5,8 +5,14 @@
 		header('Location: index.php');
 	}
 	$result = mysql_query("INSERT INTO delivery (deliverydate, deliverytime, staffid, supplier) VALUES('"
-		. $_POST['submityear1'] . $_POST['submitmonth1'] . $_POST['submitday1'] . "', '" 
-		. $_POST['submithour1'] . $_POST['submitminute1'] . "', '" 
-		. $_SESSION['userID'] ."', '" 
-		. $_POST['submitsupplier'] ."'") or die(mysql_error());
+		. $_POST['submityear1'] . "-" . $_POST['submitmonth1'] . "-" . $_POST['submitday1'] . "', '" 
+		. $_POST['submithour1'] . ":" . $_POST['submitminute1'] . ":00', " 
+		. $_SESSION['userID'] .", '" 
+		. $_POST['submitsupplier'] ."')") or die(mysql_error());
+		
+	if($result)
+	{
+		echo "<p>Success!</p>";
+		echo "<a href = 'warehouse.php'>Return to Main Page</a>";
+	}
 ?>

@@ -36,7 +36,7 @@
 				echo "<th>Quantity</th>";
 			echo "</tr>";
 			
-			$itempieces = explode(" ", $_POST['submititems2']);
+			$itempieces = explode("$", $_POST['submititems2']);
 			for($i = 0; $i < count($itempieces) - 3; $i += 3)
 			{
 				echo "<tr>";
@@ -49,11 +49,11 @@
 		?>
 		
 		<form action = "processissue.php" method = "post">
-			<input type = "hidden" id = "submityear2" name = "submityear2" value = <? $_POST['submityear2'] ?>/>
-			<input type = "hidden" id = "submitmonth2" name = "submitmonth2" value = <? $_POST['submitmonth2'] ?>/>
-			<input type = "hidden" id = "submitday2" name = "submitday2" value = <? $_POST['submitday2'] ?>/>
-			<input type = "hidden" id = "submitagent" name = "submitagent" value = <? $_POST['submitagent'] ?>/>
-			<input type = "hidden" id = "submititems2" name = "submititems2" value = <? $_POST['submititems2'] ?>/>
+			<input type = "hidden" id = "submityear2" name = "submityear2" value = <? echo $_POST['submityear2']; ?>>
+			<input type = "hidden" id = "submitmonth2" name = "submitmonth2" value = <? echo $_POST['submitmonth2']; ?>>
+			<input type = "hidden" id = "submitday2" name = "submitday2" value = <? echo $_POST['submitday2']; ?>>
+			<input type = "hidden" id = "submitagent" name = "submitagent" value = <? echo $_POST['submitagent']; ?>>
+			<input type = "hidden" id = "submititems2" name = "submititems2" value = <? echo $_POST['submititems2']; ?>>
             <input type = "submit" value = "Confirm">
 		</form>
 		
